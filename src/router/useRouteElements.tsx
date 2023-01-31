@@ -2,10 +2,11 @@ import { useRoutes, Outlet, Navigate } from 'react-router-dom'
 import { path } from '../constants/path'
 import Login from '../pages/Auth/Login'
 import Register from '../pages/Auth/Register'
-import ProductDetails from './../pages/ProductDetail/ProductDetails'
-import NotFound from './../pages/NotFound/NotFound'
-import Home from './../pages/Home/Home'
-import Cart from './../pages/Cart/Cart'
+import ProductDetails from './../pages/ProductDetail'
+import NotFound from './../pages/NotFound'
+import Home from './../pages/Home'
+import Cart from './../pages/Cart'
+import MainLayout from './../Layouts/MainLayout'
 
 const isAuthenticated = true
 /* A function that is used to check if the user is authenticated or not. If the user is authenticated,
@@ -32,11 +33,19 @@ export default function useRouteElements() {
       children: [
         {
           path: path.login,
-          element: <Login />
+          element: (
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          )
         },
         {
           path: path.register,
-          element: <Register />
+          element: (
+            <MainLayout>
+              <Register />
+            </MainLayout>
+          )
         }
       ]
     },
@@ -49,7 +58,9 @@ export default function useRouteElements() {
           path: path.cart,
           element: (
             <>
-              <Cart />
+              <MainLayout>
+                <Cart />
+              </MainLayout>
             </>
           )
         }
@@ -59,7 +70,11 @@ export default function useRouteElements() {
     {
       path: path.home,
       index: true,
-      element: <Home />
+      element: (
+        <MainLayout>
+          <Home />
+        </MainLayout>
+      )
     },
 
     {
@@ -68,7 +83,11 @@ export default function useRouteElements() {
     },
     {
       path: path.productDetail,
-      element: <ProductDetails />
+      element: (
+        <MainLayout>
+          <ProductDetails />
+        </MainLayout>
+      )
     }
   ])
   return routeElements
