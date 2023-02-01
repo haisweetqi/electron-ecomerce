@@ -11,7 +11,6 @@ const Login = () => {
   return (
     <LoginContainer>
       <FormCustom
-        labelCol={{ span: 8 }}
         // wrapperCol={{ span: 16 }}
         size='large'
         name='normal_login'
@@ -22,11 +21,11 @@ const Login = () => {
       >
         <StyledH2>Hi, Welcome Back! 👋</StyledH2>
 
-        <Form.Item name='email' label='Username'>
-          <Input size='large' placeholder='Example@gmail.com' />
+        <Form.Item name='username'>
+          <Input size='large' placeholder='Username' />
         </Form.Item>
 
-        <Form.Item name='password' label='Password'>
+        <Form.Item name='password'>
           <Input.Password
             size='large'
             placeholder='Enter your password'
