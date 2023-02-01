@@ -22,6 +22,12 @@ const Header = () => {
       </div>
     </div>
   )
+
+  const styleBadge = {
+    background: '#EDA415',
+    border: 'none',
+    color: '#fff'
+  }
   const isAuthenticated = true
   return (
     <Wrapper>
@@ -47,12 +53,12 @@ const Header = () => {
           <div>
             <AiOutlineHeart />
             <Link to='/'>Favorites</Link>
-            <BadgeCustom count={5} style={{ background: '#EDA415', border: 'none', color: '#fff' }} />
+            <BadgeCustom count={5} style={styleBadge} />
           </div>
           <div>
             <AiOutlineShoppingCart />
             <Link to='/cart'>Cart</Link>
-            <BadgeCustom count={5} style={{ background: '#EDA415', border: 'none', color: '#fff' }} />
+            <BadgeCustom count={5} style={styleBadge} />
           </div>
         </StyledUser>
       </Container>
