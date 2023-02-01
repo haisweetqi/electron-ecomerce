@@ -1,35 +1,99 @@
+import { useRef, useContext } from 'react'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import { Button, Checkbox, Form, Input } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import googleIcon from '../../../assets/images/google.png'
 import facebookIcon from '../../../assets/images/facebook.png'
 import styled from 'styled-components'
+import { validateMessages } from './../../../utils/validate'
+import { AppContext } from '../../../contexts/auth.context'
+import { useMutation } from '@tanstack/react-query'
+import { authApi } from './../../../apis/auth.api'
+import { toast } from 'react-toastify'
+import HttpStatusCode from '../../../constants/httpStatusCode'
 
 const Login = () => {
-  const onFinish = (values: any) => {}
+  const navigate = useNavigate()
+  const userNameRef: React.MutableRefObject<any> = useRef()
+  const passwordRef: React.MutableRefObject<any> = useRef()
+
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
+
+  /* A hook from react-query. It is a hook that allows us to make a request to the server. */
+  const loginMutation = useMutation({
+    mutationFn: (body: any) => authApi.login(body)
+  })
+
+  const handleLogin = (values: any) => {
+    loginMutation.mutate(values, {
+      onSuccess: (dataSuccess) => {
+        const { data } = dataSuccess
+        setIsAuthenticated(true)
+        setProfile(data.user)
+        navigate(-1)
+        toast.success('Login successful')
+      },
+      onError: (error: any) => {
+        console.log(error)
+
+        toast.error(error.response.data.message)
+      }
+    })
+  }
+
+  const handleUsernameKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      passwordRef.current.focus()
+    }
+  }
+
+  const handlePasswordKeyDown = (event: any) => {
+    if (event.key === 'Enter') {
+      handleLogin('1')
+    }
+  }
 
   return (
     <LoginContainer>
       <FormCustom
-        // wrapperCol={{ span: 16 }}
         size='large'
+        layout='vertical'
         name='normal_login'
         className='login-form'
         initialValues={{ remember: true }}
-        onFinish={onFinish}
-        layout='vertical'
+        onFinish={handleLogin}
+        validateMessages={validateMessages}
       >
         <StyledH2>Hi, Welcome Back! 👋</StyledH2>
 
-        <Form.Item name='username'>
-          <Input size='large' placeholder='Username' />
+        <Form.Item
+          name='email'
+          rules={[
+            {
+              required: true,
+              pattern: /^\S+@\S+\.\S+$/
+            }
+          ]}
+        >
+          <Input size='large' placeholder='Username' ref={userNameRef} onKeyDown={handleUsernameKeyDown} />
         </Form.Item>
 
-        <Form.Item name='password'>
+        <Form.Item
+          name='password'
+          rules={[
+            {
+              required: true,
+              min: 8,
+              max: 20
+            }
+          ]}
+        >
           <Input.Password
             size='large'
             placeholder='Enter your password'
             iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            ref={passwordRef}
+            onKeyDown={handlePasswordKeyDown}
           />
         </Form.Item>
 

@@ -1,8 +1,17 @@
 import axios from 'axios'
+import {
+  clearLS,
+  getAccessTokenFromLS,
+  getRefreshTokenFromLS,
+  setAccessTokenToLS,
+  setProfileToLS,
+  setRefreshTokenToLS
+} from './../utils/auth'
+import { URL_LOGIN, URL_LOGOUT, URL_REGISTER } from './../constants/url'
 
 /* Creating a new instance of axios with the baseURL, headers and timeout. */
 const apiConfig = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: 'http://hung.fresher.ameladev.click/',
   headers: { 'Content-Type': 'application/json' },
   timeout: 1000
 })
@@ -10,7 +19,13 @@ const apiConfig = axios.create({
 /* Intercepting the request and doing something before the request is sent. */
 apiConfig.interceptors.request.use(
   function (config) {
+    let accessToken = getAccessTokenFromLS()
+    let refreshToken = getRefreshTokenFromLS()
     // Do something before request is sent
+    if (accessToken && config.headers) {
+      config.headers.authorization = accessToken
+      return config
+    }
     return config
   },
   function (error) {
@@ -23,6 +38,26 @@ apiConfig.interceptors.request.use(
 /* Intercepting the response and doing something before the response is sent. */
 apiConfig.interceptors.response.use(
   function (response) {
+    let accessToken = getAccessTokenFromLS()
+    let refreshToken = getRefreshTokenFromLS()
+    const { url } = response.config
+    console.log(url)
+    console.log(response.data.authorisation.token)
+
+    if (url === URL_LOGIN || url === URL_REGISTER) {
+      const data = response.data
+      accessToken = data.authorisation.token
+      //   refreshToken = data.data.refresh_token
+      setAccessTokenToLS(accessToken)
+      //   setRefreshTokenToLS(refreshToken)
+      setProfileToLS(data.user)
+    } else if (url === URL_LOGOUT) {
+      //   accessToken = ''
+      //   refreshToken = ''
+      //   clearLS()
+
+      
+    }
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response
