@@ -7,6 +7,7 @@ import { Container, StyledImage } from '../../Global.styled'
 import { Popover, Avatar } from 'antd'
 import BadgeCustom from '../common/Badge'
 import SearchCustom from './../common/Search/SearchCustom'
+import { AppContext } from '../../contexts/auth.context'
 
 const Header = () => {
   const content = (
@@ -28,7 +29,8 @@ const Header = () => {
     border: 'none',
     color: '#fff'
   }
-  const isAuthenticated = true
+  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
+  console.log(isAuthenticated, setIsAuthenticated)
   return (
     <Wrapper>
       <Container className='container'>
@@ -47,7 +49,7 @@ const Header = () => {
             // <div>{profile?.email}</div>
             <div>
               <AiOutlineUser />
-              <Link to='/login'>Sign in</Link>
+              <Link to='auth/login'>Sign in</Link>
             </div>
           )}
           <div>
