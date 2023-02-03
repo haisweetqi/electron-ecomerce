@@ -30,7 +30,7 @@ const Login = () => {
         const { data } = dataSuccess
         setIsAuthenticated(true)
         setProfile(data.user)
-        navigate(-1)
+        navigate('/')
         toast.success('Login successful')
       },
       onError: (error: any) => {
