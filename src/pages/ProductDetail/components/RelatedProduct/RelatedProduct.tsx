@@ -1,5 +1,5 @@
 import React from 'react'
-import Product from '../../../Home/components/Product'
+import ProductList from '../../../../components/ProductList/ProductList'
 import { ListProduct, RelatedWrapper, StyleH1 } from './relatedProductStyle'
 
 const RelatedProduct = (props: any) => {
@@ -16,7 +16,7 @@ const RelatedProduct = (props: any) => {
         {Array(5)
           .fill(listProduct)
           .map((product: any, index: any) => (
-            <Product product={product} key={index} />
+            <ProductList product={product} key={index} />
           ))}
       </ListProduct>
     </RelatedWrapper>
