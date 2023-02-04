@@ -1,12 +1,5 @@
 import axios from 'axios'
-import {
-  clearLS,
-  getAccessTokenFromLS,
-  getRefreshTokenFromLS,
-  setAccessTokenToLS,
-  setProfileToLS,
-  setRefreshTokenToLS
-} from './../utils/auth'
+import { getAccessTokenFromLS, getRefreshTokenFromLS, setAccessTokenToLS, setProfileToLS } from './../utils/auth'
 import { URL_LOGIN, URL_LOGOUT, URL_REGISTER } from './../constants/url'
 
 /* Creating a new instance of axios with the baseURL, headers and timeout. */
@@ -20,10 +13,12 @@ const apiConfig = axios.create({
 apiConfig.interceptors.request.use(
   function (config) {
     let accessToken = getAccessTokenFromLS()
-    let refreshToken = getRefreshTokenFromLS()
+    console.log(accessToken)
+
+    // let refreshToken = getRefreshTokenFromLS()
     // Do something before request is sent
     if (accessToken && config.headers) {
-      config.headers.authorization = accessToken
+      config.headers.authorization = `Bearer ${accessToken}`
       return config
     }
     return config
@@ -41,8 +36,6 @@ apiConfig.interceptors.response.use(
     let accessToken = getAccessTokenFromLS()
     let refreshToken = getRefreshTokenFromLS()
     const { url } = response.config
-    console.log(url)
-    console.log(response.data.authorisation.token)
 
     if (url === URL_LOGIN || url === URL_REGISTER) {
       const data = response.data
@@ -55,8 +48,6 @@ apiConfig.interceptors.response.use(
       //   accessToken = ''
       //   refreshToken = ''
       //   clearLS()
-
-      
     }
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
