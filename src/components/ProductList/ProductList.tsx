@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card } from 'antd'
+import { Button, Card, Image } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 const { Meta } = Card
@@ -9,7 +9,8 @@ const ProductList = ({ product }: any) => {
       <Card style={{ width: 240 }}>
         <Link to={`/product/${product.id}`}>
           {}
-          <img
+          <Image
+            width='100%'
             alt={product.productName}
             src={
               'https://img.freepik.com/free-psd/chair-pillow_176382-875.jpg?w=740&t=st=1674708211~exp=1674708811~hmac=3b5ca3b502558e2e9ec33eada6e0f046f2fa4622462f59701d359136f140cef6https://img.freepik.com/free-psd/chair-pillow_176382-875.jpg?w=740&t=st=1674708211~exp=1674708811~hmac=3b5ca3b502558e2e9ec33eada6e0f046f2fa4622462f59701d359136f140cef6'

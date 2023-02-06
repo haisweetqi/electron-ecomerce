@@ -36,6 +36,7 @@ import Description from './components/Description'
 import Reviews from './components/Reviews'
 import RelatedProduct from './components/RelatedProduct'
 import ThumbsImage from './components/ThumbsImage'
+import { Container } from '../../Global.styled'
 
 const ProductDetails = () => {
   const rel = []
@@ -63,127 +64,135 @@ const ProductDetails = () => {
   }
 
   return (
-    <ContentWrapper>
-      <ProductWrapper>
-        <>
-          <ProductImage
-            style={{
-              width: '50%'
-            }}
-          >
-            <ProductImageShow>
-              <Image width={'100%'} height={'100%'} style={{ objectFit: 'cover' }} src={data?.data.imgUrl[0].url} />
-            </ProductImageShow>
-            <ProductImageDiff>
-              {data?.data.imgUrl.slice(1, 5).map((itemImage: any) => (
-                <SubImage key={itemImage.id}>
-                  <Image
-                    width={'100%'}
-                    height={'100%'}
-                    src={itemImage.url}
-                    style={{
-                      borderRadius: '16px',
-                      overflow: 'hidden',
-                      objectFit: 'cover'
-                    }}
-                  />
-                </SubImage>
-              ))}
-            </ProductImageDiff>
-
-            {/* <ThumbsImage dataImage = {data?.data.imgUrl} /> */}
-          </ProductImage>
-        </>
-
-        <ProductInfo>
+    <Container>
+      <ContentWrapper>
+        <ProductWrapper>
           <>
-            <StyledH2>{data?.data.productName}</StyledH2>
-            <StyledH3>${data?.data.price}</StyledH3>
-            <StyledRating>
-              <Rate allowHalf disabled value={data?.data.avgRating} />
-              <StyledSpan style={{ fontWeight: '0.8rem' }}>
-                {data?.data.reviews.length === 0 ? 'No reviews' : `${data?.data.reviews.length} reviews`}
-              </StyledSpan>
-              <StyledSpan style={{ fontWeight: '0.8rem' }}>49 sold</StyledSpan>
-            </StyledRating>
-          </>
-
-          <Divider style={{ margin: '2.5rem 0' }} />
-
-          <QuantityWrapper>
-            <StyledSpan>Quantity : </StyledSpan>
-            <div
+            <ProductImage
               style={{
-                display: 'flex',
-                alignItems: 'center'
+                width: '50%'
               }}
             >
-              <Button icon={<MinusOutlined />} onClick={handleDecrease} disabled={!(quantity - 1)}></Button>
-              <Quantity>{quantity}</Quantity>
-              <Button icon={<PlusOutlined />} onClick={handleIncrease}></Button>
-            </div>
-            <StyledSpan> 499 pieces available</StyledSpan>
-          </QuantityWrapper>
+              <ProductImageShow>
+                <Image
+                  width={'100%'}
+                  height={'100%'}
+                  style={{ objectFit: 'cover' }}
+                  src={`http://hung.fresher.ameladev.click/${data?.data.data.images[0].product_image}`}
+                />
+              </ProductImageShow>
+              <ProductImageDiff>
+                {data?.data.data.images.slice(1, 5).map((itemImage: any) => (
+                  <SubImage key={itemImage.id}>
+                    <Image
+                      width={'100%'}
+                      height={'100%'}
+                      src={`http://hung.fresher.ameladev.click/${itemImage.product_image}`}
+                      style={{
+                        borderRadius: '16px',
+                        overflow: 'hidden',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  </SubImage>
+                ))}
+              </ProductImageDiff>
 
-          <AddOrBuy>
-            <StyledButton>Add to cart</StyledButton>
-            <StyledButton>Buy it now</StyledButton>
-            <Button
-              onClick={handleLike}
-              size='large'
-              shape='circle'
-              icon={<HeartOutlined />}
-              style={{
-                backgroundColor: like ? 'red' : '#EEEEEE'
-              }}
-            />
-          </AddOrBuy>
+              {/* <ThumbsImage dataImage = {data?.data.imgUrl} /> */}
+            </ProductImage>
+          </>
 
-          <Divider style={{ margin: '2.5rem 0' }} />
+          <ProductInfo>
+            <>
+              <StyledH2>{data?.data.data.name}</StyledH2>
+              <StyledH3>${data?.data.data.price}</StyledH3>
+              <StyledRating>
+                <Rate allowHalf disabled value={data?.data.avgRating} />
+                <StyledSpan style={{ fontWeight: '0.8rem' }}>
+                  {/* {data?.data.reviews.length === 0 ? 'No reviews' : `${data?.data.reviews.length} reviews`} */}
+                  No reviews
+                </StyledSpan>
+                <StyledSpan style={{ fontWeight: '0.8rem' }}>49 sold</StyledSpan>
+              </StyledRating>
+            </>
 
-          <StyledCategory>
-            Category:
-            <StyledSpan style={{ fontWeight: 400 }}>20% off</StyledSpan>
-            <StyledSpan style={{ fontWeight: 400 }}>49% off</StyledSpan>
-            <StyledSpan style={{ fontWeight: 400 }}>Alex remote</StyledSpan>
-          </StyledCategory>
+            <Divider style={{ margin: '2.5rem 0' }} />
 
-          <StyledShare>
-            Share:
-            <StyledSpan style={{ fontWeight: 400 }}>
-              <GoogleOutlined />
-            </StyledSpan>
-            <StyledSpan style={{ fontWeight: 400 }}>
-              <FacebookOutlined />
-            </StyledSpan>
-            <StyledSpan style={{ fontWeight: 400 }}>
-              <WhatsAppOutlined />
-            </StyledSpan>
-          </StyledShare>
-        </ProductInfo>
-      </ProductWrapper>
+            <QuantityWrapper>
+              <StyledSpan>Quantity : </StyledSpan>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                <Button icon={<MinusOutlined />} onClick={handleDecrease} disabled={!(quantity - 1)}></Button>
+                <Quantity>{quantity}</Quantity>
+                <Button icon={<PlusOutlined />} onClick={handleIncrease}></Button>
+              </div>
+              <StyledSpan> 499 pieces available</StyledSpan>
+            </QuantityWrapper>
 
-      <>
-        <TabsCustom
-          defaultActiveKey='1'
-          centered
-          items={[
-            {
-              label: <ButtonCustom>Description</ButtonCustom>,
-              key: '1',
-              children: <Description description={data?.data.description} />
-            },
-            {
-              label: <ButtonCustom>Reviews</ButtonCustom>,
-              key: '2',
-              children: <Reviews reviews={data?.data.reviews} />
-            }
-          ]}
-        />
-      </>
+            <AddOrBuy>
+              <StyledButton>Add to cart</StyledButton>
+              <StyledButton>Buy it now</StyledButton>
+              <Button
+                onClick={handleLike}
+                size='large'
+                shape='circle'
+                icon={<HeartOutlined />}
+                style={{
+                  backgroundColor: like ? 'red' : '#EEEEEE'
+                }}
+              />
+            </AddOrBuy>
 
-      <RelatedProduct listProduct={data?.data} />
-    </ContentWrapper>
+            <Divider style={{ margin: '2.5rem 0' }} />
+
+            <StyledCategory>
+              Category:
+              <StyledSpan style={{ fontWeight: 400 }}>20% off</StyledSpan>
+              <StyledSpan style={{ fontWeight: 400 }}>49% off</StyledSpan>
+              <StyledSpan style={{ fontWeight: 400 }}>Alex remote</StyledSpan>
+            </StyledCategory>
+
+            <StyledShare>
+              Share:
+              <StyledSpan style={{ fontWeight: 400 }}>
+                <GoogleOutlined />
+              </StyledSpan>
+              <StyledSpan style={{ fontWeight: 400 }}>
+                <FacebookOutlined />
+              </StyledSpan>
+              <StyledSpan style={{ fontWeight: 400 }}>
+                <WhatsAppOutlined />
+              </StyledSpan>
+            </StyledShare>
+          </ProductInfo>
+        </ProductWrapper>
+
+        <>
+          <TabsCustom
+            defaultActiveKey='1'
+            centered
+            items={[
+              {
+                label: <ButtonCustom>Description</ButtonCustom>,
+                key: '1',
+                children: <Description description={data?.data.data.description} />
+              },
+              {
+                label: <ButtonCustom>Reviews</ButtonCustom>,
+                key: '2',
+                children: <Reviews />
+              }
+            ]}
+          />
+        </>
+
+        <RelatedProduct listProduct={data?.data} />
+      </ContentWrapper>
+    </Container>
   )
 }
 

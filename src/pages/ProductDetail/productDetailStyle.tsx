@@ -2,7 +2,7 @@ import { Avatar, Button, Image, Tabs } from 'antd'
 import styled from 'styled-components'
 
 export const ContentWrapper = styled.div`
-  padding: 6.25rem 20rem;
+  padding: 6.25rem 0rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,7 +32,7 @@ export const SubImage = styled.div`
 export const ProductImageDiff = styled.div`
   padding: 2rem 1rem;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-evenly; */
   align-items: center;
   gap: 2rem;
 `
