@@ -18,6 +18,6 @@ export const authApi = {
    * @returns The return value is a promise.
    */
   logout() {
-    return apiService.post(URL_LOGOUT)
+    return apiService.get(URL_LOGOUT)
   }
 }

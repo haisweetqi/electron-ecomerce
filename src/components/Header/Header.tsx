@@ -1,15 +1,40 @@
 import React, { useContext } from 'react'
 import logo from '../../assets/images/logo.png'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineUser, AiOutlineHeart, AiOutlineShoppingCart } from 'react-icons/ai'
 import { Container, StyledImage } from '../../Global.styled'
-import { Popover, Avatar } from 'antd'
+import { Popover, Avatar, Button } from 'antd'
 import BadgeCustom from '../common/Badge'
 import SearchCustom from './../common/Search/SearchCustom'
 import { AppContext } from '../../contexts/auth.context'
+import { setProfileToLS } from '../../utils/auth'
+import { useMutation } from '@tanstack/react-query'
+import { authApi } from '../../apis/auth.api'
+
+const styleBadge = {
+  background: '#EDA415',
+  border: 'none',
+  color: '#fff'
+}
 
 const Header = () => {
+  const navigate = useNavigate()
+  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
+  console.log(isAuthenticated, setIsAuthenticated)
+
+  const logoutMutation = useMutation({
+    mutationFn: authApi.logout,
+    onSuccess: () => {
+      setIsAuthenticated(false)
+      setProfileToLS(null)
+      navigate('/')
+    }
+  })
+
+  const handleLogout = () => {
+    logoutMutation.mutate()
+  }
   const content = (
     <div style={{ width: 130 }}>
       <div>
@@ -18,19 +43,10 @@ const Header = () => {
       <div>
         <StyledLink to={'/profile'}>Your Cart</StyledLink>
       </div>
-      <div>
-        <StyledLink to={'/'}>Logout</StyledLink>
-      </div>
+      <Button onClick={handleLogout}>Logout</Button>
     </div>
   )
 
-  const styleBadge = {
-    background: '#EDA415',
-    border: 'none',
-    color: '#fff'
-  }
-  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
-  console.log(isAuthenticated, setIsAuthenticated)
   return (
     <Wrapper>
       <Container className='container'>
