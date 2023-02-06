@@ -28,10 +28,12 @@ const Login = () => {
     loginMutation.mutate(values, {
       onSuccess: (dataSuccess) => {
         const { data } = dataSuccess
-        setIsAuthenticated(true)
-        setProfile(data.user)
-        navigate('/')
-        toast.success('Login successful')
+        if (data.status === 'success') {
+          setIsAuthenticated(true)
+          setProfile(data.user)
+          navigate('/')
+          toast.success('Login successful')
+        }
       },
       onError: (error: any) => {
         console.log(error)

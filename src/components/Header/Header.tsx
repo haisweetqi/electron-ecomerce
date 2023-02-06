@@ -19,21 +19,21 @@ const styleBadge = {
 }
 
 const Header = () => {
-  const navigate = useNavigate()
+  //   const navigate = useNavigate()
   const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
-  console.log(isAuthenticated, setIsAuthenticated)
+  //   console.log(isAuthenticated, setIsAuthenticated)
 
-  const logoutMutation = useMutation({
-    mutationFn: authApi.logout,
-    onSuccess: () => {
-      setIsAuthenticated(false)
-      setProfileToLS(null)
-      navigate('/')
-    }
-  })
+  //   const logoutMutation = useMutation({
+  //     mutationFn: authApi.logout,
+  //     onSuccess: () => {
+  //       setIsAuthenticated(false)
+  //       setProfileToLS(null)
+  //       navigate('/')
+  //     }
+  //   })
 
   const handleLogout = () => {
-    logoutMutation.mutate()
+    // logoutMutation.mutate()
   }
   const content = (
     <div style={{ width: 130 }}>
