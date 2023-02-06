@@ -1,18 +1,41 @@
-import { useContext } from 'react'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import { Button, Form, Input } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import googleIcon from '../../../assets/images/google.png'
 import facebookIcon from '../../../assets/images/facebook.png'
-
 import styled from 'styled-components'
+import { useMutation } from '@tanstack/react-query'
+import { authApi } from './../../../apis/auth.api'
+import { toast } from 'react-toastify'
 
-const Login = () => {
-  const onFinish = (values: any) => {}
+const Register = () => {
+  const navigate = useNavigate()
+  /* A hook from react-query. It is a hook that allows us to make a request to the server. */
+  const registerMutation = useMutation({
+    mutationFn: (body: any) => authApi.register(body)
+  })
+
+  const handleRegister = (values: any) => {
+    registerMutation.mutate(values, {
+      onSuccess: (dataSuccess) => {
+        const { data } = dataSuccess
+        console.log(data)
+        if (data.status === 'success') {
+          navigate('/auth/login')
+          toast.success('Register successful')
+        }
+      },
+      onError: (error: any) => {
+        console.log(error)
+
+        toast.error(error.response.data.message)
+      }
+    })
+  }
 
   return (
     <RegisterContainer>
-      <FormCustom size='large' name='normal_login' className='login-form' onFinish={onFinish} layout='vertical'>
+      <FormCustom size='large' name='normal_login' className='login-form' onFinish={handleRegister} layout='vertical'>
         <StyledH2>Create an account</StyledH2>
         <StyledSpan>Connect with your friends today!</StyledSpan>
 
@@ -20,8 +43,8 @@ const Login = () => {
           <Input size='large' placeholder='Name' />
         </Form.Item>
 
-        <Form.Item name='username'>
-          <Input size='large' placeholder='Username' />
+        <Form.Item name='email'>
+          <Input size='large' placeholder='Email' />
         </Form.Item>
 
         <Form.Item name='password'>
@@ -62,7 +85,7 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register
 
 export const RegisterContainer = styled.div`
   width: 100vw;

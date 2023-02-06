@@ -4,7 +4,7 @@ import { URL_LOGOUT, URL_REGISTER, URL_LOGIN } from '../constants/url'
 export const authApi = {
   /* A function that takes an object with two properties, email and password, and returns the result of
   the apiService.post function. */
-  register(params: { email: string; password: string }) {
+  register(params: { name: string; email: string; password: string }) {
     return apiService.post(URL_REGISTER, params)
   },
   /* A function that takes an object with two properties, email and password, and returns the result of
