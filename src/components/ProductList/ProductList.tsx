@@ -2,38 +2,71 @@ import React from 'react'
 import { Button, Card, Image } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { Container } from '../../Global.styled'
 const { Meta } = Card
 const ProductList = ({ product }: any) => {
+  const data = product || []
+
   return (
-    <>
-      <Card style={{ width: 240 }}>
-        <Link to={`/product/${product.id}`}>
-          {}
-          <Image
-            width='100%'
-            alt={product.productName}
-            src={
-              'https://img.freepik.com/free-psd/chair-pillow_176382-875.jpg?w=740&t=st=1674708211~exp=1674708811~hmac=3b5ca3b502558e2e9ec33eada6e0f046f2fa4622462f59701d359136f140cef6https://img.freepik.com/free-psd/chair-pillow_176382-875.jpg?w=740&t=st=1674708211~exp=1674708811~hmac=3b5ca3b502558e2e9ec33eada6e0f046f2fa4622462f59701d359136f140cef6'
-            }
-            height={240}
+    <ProductWrapper>
+      <Card>
+        <Link to={`/product/${data.id}`}>
+          <ImageWrapper>
+            <Image
+              width='100%'
+              height={'100%'}
+              style={{ objectFit: 'cover' }}
+              alt={data.productName}
+              src={`http://hung.fresher.ameladev.click/${data.images[0].product_image}`}
+            />
+          </ImageWrapper>
+        </Link>
+
+        <Link to={`/product/${data.id}`}>
+          <Meta
+            title={data.name}
+            style={{ textTransform: 'capitalize', padding: '1rem 1rem 0rem 1rem', wordWrap: 'break-word' }}
           />
         </Link>
-        <Meta title={product.name} style={{ textTransform: 'capitalize' }} />
+
         <StyledDiv>
-          <p>{product.price} VND</p>
+          <p>{data.price} VND</p>
           <p>30.7k sold</p>
         </StyledDiv>
       </Card>
-    </>
+    </ProductWrapper>
   )
 }
 
 export default ProductList
 
+const ProductWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid #b6b6b6;
+
+  .ant-card-body {
+    padding: 0;
+    border: none;
+  }
+
+  .ant-card-bordered {
+    border: none;
+  }
+`
+
+const ImageWrapper = styled.div`
+  height: 20rem;
+`
+
 const StyledDiv = styled.div`
-  margin: 1rem 0;
   display: flex;
   align-items: center;
+  padding: 1rem;
   justify-content: space-between;
   p {
     font-weight: 500;
@@ -45,12 +78,4 @@ const StyledDiv = styled.div`
     font-size: 1.25rem;
     cursor: pointer;
   }
-`
-
-const ButtonStyled = styled(Button)`
-  background-color: #eda415;
-  cursor: pointer;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
 `

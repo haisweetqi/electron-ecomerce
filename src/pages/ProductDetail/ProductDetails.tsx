@@ -35,11 +35,9 @@ import {
 import Description from './components/Description'
 import Reviews from './components/Reviews'
 import RelatedProduct from './components/RelatedProduct'
-import ThumbsImage from './components/ThumbsImage'
 import { Container } from '../../Global.styled'
 
 const ProductDetails = () => {
-  const rel = []
   const { id } = useParams()
   const { data, isLoading, isError } = useQuery({
     queryKey: ['productDetail', id],
@@ -82,7 +80,7 @@ const ProductDetails = () => {
                 />
               </ProductImageShow>
               <ProductImageDiff>
-                {data?.data.data.images.slice(1, 5).map((itemImage: any) => (
+                {data?.data.data.images.slice(1, 2).map((itemImage: any) => (
                   <SubImage key={itemImage.id}>
                     <Image
                       width={'100%'}
@@ -97,15 +95,13 @@ const ProductDetails = () => {
                   </SubImage>
                 ))}
               </ProductImageDiff>
-
-              {/* <ThumbsImage dataImage = {data?.data.imgUrl} /> */}
             </ProductImage>
           </>
 
           <ProductInfo>
             <>
               <StyledH2>{data?.data.data.name}</StyledH2>
-              <StyledH3>${data?.data.data.price}</StyledH3>
+              <StyledH3>{data?.data.data.price}VND</StyledH3>
               <StyledRating>
                 <Rate allowHalf disabled value={data?.data.avgRating} />
                 <StyledSpan style={{ fontWeight: '0.8rem' }}>
@@ -170,7 +166,6 @@ const ProductDetails = () => {
             </StyledShare>
           </ProductInfo>
         </ProductWrapper>
-
         <>
           <TabsCustom
             defaultActiveKey='1'
@@ -189,8 +184,7 @@ const ProductDetails = () => {
             ]}
           />
         </>
-
-        <RelatedProduct listProduct={data?.data} />
+        {data?.data.data && <RelatedProduct listProduct={data?.data.data} />}
       </ContentWrapper>
     </Container>
   )

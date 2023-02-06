@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import SelectCustom from '../../components/common/Select'
 import ProductList from '../../components/ProductList/ProductList'
 import { Spin } from 'antd'
+import { Container } from '../../Global.styled'
 const Home = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['products'],
@@ -32,7 +33,7 @@ const Home = () => {
   const handleAddToCart = () => {}
   return (
     <>
-      <Wrapper>
+      <Container>
         <StyledH1>Products List</StyledH1>
         <SearchWrapper>
           <SelectCustom
@@ -54,26 +55,21 @@ const Home = () => {
             // options={options}
           />
         </SearchWrapper>
-        <ProductsContainer>
-          <ProductsBox>
-            {data?.data.data.data.map((product: any) => (
-              <div key={product.id}>
-                <ProductList product={product} handleAddToCart={handleAddToCart} />
-              </div>
-            ))}
-          </ProductsBox>
-        </ProductsContainer>
+        <ProductsBox>
+          {data?.data.data.data.map((product: any) => (
+            <div key={product.id}>
+              {product && <ProductList product={product} handleAddToCart={handleAddToCart} />}
+            </div>
+          ))}
+        </ProductsBox>
         <PaginationCustom />
-      </Wrapper>
+      </Container>
     </>
   )
 }
 
 export default Home
 
-export const Wrapper = styled.div`
-  padding: 0px 61px;
-`
 const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -90,11 +86,9 @@ export const StyledH1 = styled.h1`
   margin: 2rem;
 `
 
-export const ProductsContainer = styled.div``
-
 export const ProductsBox = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
+  gap: 5rem;
   margin: 3rem 0;
 `
