@@ -1,9 +1,12 @@
-import React from 'react'
+import { useState } from 'react'
 import { Image, Space, Table, Button } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { Container } from '../../Global.styled'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
-import styled from 'styled-components'
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
+import { StyledCartTotal, StyledCartTotalCheckout, StyledH3, StyledWrapper } from './cartStyle'
+import { Quantity, QuantityWrapper } from '../ProductDetail/productDetailStyle'
+import ButtonCustom from '../../components/common/Button'
 
 interface DataType {
   key: string
@@ -14,6 +17,14 @@ interface DataType {
   subtotal: number
 }
 const Cart = () => {
+  const [quantity, setQuantity] = useState(1)
+  const handleDecrease = () => {
+    setQuantity((prev) => prev - 1)
+  }
+
+  const handleIncrease = () => {
+    setQuantity((prev) => prev + 1)
+  }
   const handleDeleteProduct = () => {
     console.log('1112')
   }
@@ -36,9 +47,16 @@ const Cart = () => {
       key: 'name'
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age'
+      title: 'Quantity',
+      dataIndex: 'quantity',
+      key: 'quantity',
+      render: (_, record) => (
+        <QuantityWrapper>
+          <Button icon={<MinusOutlined />} onClick={handleDecrease} disabled={!(quantity - 1)}></Button>
+          <Quantity>{quantity}</Quantity>
+          <Button icon={<PlusOutlined />} onClick={handleIncrease}></Button>
+        </QuantityWrapper>
+      )
     },
     {
       title: 'Price',
@@ -94,10 +112,18 @@ const Cart = () => {
         <div style={{ flex: 3 }}>
           <Table columns={columns} dataSource={data} pagination={false} />
           <div style={{ marginTop: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <StyledButton>Continue shopping</StyledButton>
-            <StyledButton style={{ backgroundColor: '#fff', color: '#C33131', border: '1px solid #C33131' }}>
+            <ButtonCustom border='none' bgColor='#eda415' borderRadius='2rem' padding='1rem 1rem'>
+              Continue shopping
+            </ButtonCustom>
+            <ButtonCustom
+              border='1px solid #C33131'
+              bgColor='#fff'
+              borderRadius='2rem'
+              padding='1rem 1rem'
+              color='#C33131'
+            >
               Clear cart
-            </StyledButton>
+            </ButtonCustom>
           </div>
         </div>
         <StyledCartTotal>
@@ -114,7 +140,9 @@ const Cart = () => {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <StyledButton>Proceed to checkout</StyledButton>
+              <ButtonCustom border='none' bgColor='#eda415' borderRadius='2rem' padding='0.5rem 1rem'>
+                Proceed to checkout
+              </ButtonCustom>
             </div>
           </StyledCartTotalCheckout>
         </StyledCartTotal>
@@ -124,41 +152,3 @@ const Cart = () => {
 }
 
 export default Cart
-
-const StyledWrapper = styled.div`
-  padding: 6rem 0;
-  display: flex;
-  column-gap: 2rem;
-  flex-wrap: wrap;
-`
-
-const StyledButton = styled(Button)`
-  background: #eda415;
-  border-radius: 32.4242px;
-  color: #fff;
-`
-
-const StyledH3 = styled.h3`
-  background: #e2f4ff;
-  text-align: center;
-  color: #232323;
-  font-weight: 600;
-  padding: 1rem 0;
-`
-
-const StyledCartTotal = styled.div`
-  flex: 1;
-  min-height: 300px;
-  border: 1px solid #c3c3c3;
-  @media screen and (max-width: 998px) {
-    margin-top: 2rem;
-  }
-`
-
-const StyledCartTotalCheckout = styled.div`
-  display: flex;
-  height: 100%;
-  padding: 0 1rem;
-  justify-content: center;
-  flex-direction: column;
-`
