@@ -19,12 +19,16 @@ export const NavbarLinkUl = styled.ul`
 export const NavbarLinkLi = styled.li`
   a {
     font-weight: 500;
-    font-size: 16px;
+    font-size: 1rem;
     color: #3a3a3a;
+  }
+
+  .active {
+    font-weight: 600;
+    font-size: 1.1rem;
   }
 `
 export const StyledLi = styled.li`
-
   font-weight: 700;
   font-size: 16px;
   color: #003f62;

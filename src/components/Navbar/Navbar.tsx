@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { DownOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Button, Dropdown, message } from 'antd'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { navLinks } from '../../constants/path'
 import { NavBarContainer, NavbarLinkLi, NavbarLinkUl, StyledLi, Wrapper } from './NavbarStyled'
 import { Container } from '../../Global.styled'
@@ -64,7 +64,7 @@ const Navbar = () => {
           <NavbarLinkUl>
             {navLinks.map((item, index) => (
               <NavbarLinkLi key={index}>
-                <Link to={item.path}>{item.display}</Link>
+                <NavLink to={item.path}>{item.display}</NavLink>
               </NavbarLinkLi>
             ))}
           </NavbarLinkUl>
