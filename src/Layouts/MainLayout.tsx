@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from '../components/Header'
+import Introduce from '../components/Introduce'
 import Navbar from '../components/Navbar'
 import Footer from './../components/Footer'
 
@@ -10,8 +11,9 @@ interface Props {
 const MainLayout = ({ children }: Props) => {
   return (
     <>
-      <Navbar />
+      <Introduce />
       <Header />
+      <Navbar />
       {children}
       <Footer />
     </>

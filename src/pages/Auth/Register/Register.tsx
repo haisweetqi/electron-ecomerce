@@ -16,6 +16,10 @@ const Login = () => {
         <StyledH2>Create an account</StyledH2>
         <StyledSpan>Connect with your friends today!</StyledSpan>
 
+        <Form.Item name='name'>
+          <Input size='large' placeholder='Name' />
+        </Form.Item>
+
         <Form.Item name='username'>
           <Input size='large' placeholder='Username' />
         </Form.Item>
@@ -24,13 +28,6 @@ const Login = () => {
           <Input.Password
             size='large'
             placeholder='Enter your password'
-            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-          />
-        </Form.Item>
-        <Form.Item name='confirmPassword'>
-          <Input.Password
-            size='large'
-            placeholder='Enter your confirmPassword'
             iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
