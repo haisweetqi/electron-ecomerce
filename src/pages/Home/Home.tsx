@@ -47,7 +47,12 @@ const Home = () => {
             <div key={product.id}>{product && <ProductList product={product} handleAddToCart={handleAddToCart} />}</div>
           ))}
         </ProductsBox>
-        <PaginationCustom current={pagination.page} handleChange={handleChangePage} total={data?.data.data.total} />
+        <PaginationCustom
+          current={pagination.page}
+          pageSize={data?.data.data.per_page}
+          handleChange={handleChangePage}
+          total={data?.data.data.total}
+        />
       </Container>
     </>
   )
