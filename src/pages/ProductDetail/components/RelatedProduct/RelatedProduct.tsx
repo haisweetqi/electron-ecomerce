@@ -13,7 +13,7 @@ const RelatedProduct = (props: any) => {
     <RelatedWrapper>
       <StyleH1>Related Product</StyleH1>
       <ListProduct>
-        {Array(5)
+        {Array(4)
           .fill(listProduct)
           .map((product: any, index: any) => (
             <ProductList product={product} key={index} />

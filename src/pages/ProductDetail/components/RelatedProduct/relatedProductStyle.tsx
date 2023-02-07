@@ -13,8 +13,8 @@ export const StyleH1 = styled.h1`
 `
 
 export const ListProduct = styled.div`
-  height: 20rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* height: 20rem; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
 `

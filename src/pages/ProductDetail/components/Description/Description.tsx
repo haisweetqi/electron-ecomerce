@@ -20,6 +20,7 @@ const DescriptionWrapper = styled.div`
 const StyledH2 = styled.h1`
   color: #003f62;
   font-size: 1.5rem;
+  margin-bottom: 1rem;
 `
 const StyledP = styled.p`
   color: #4f4f4f;
