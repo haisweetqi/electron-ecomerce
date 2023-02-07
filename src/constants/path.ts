@@ -2,10 +2,10 @@ export const path = {
   home: '/',
   login: '/auth/login',
   register: '/auth/register',
+  profile: '/profile',
   cart: '/cart',
   productDetail: '/product/:id'
 }
-
 
 export const navLinks = [
   {
