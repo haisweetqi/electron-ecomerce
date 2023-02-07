@@ -1,22 +1,23 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../../contexts/auth.context'
+import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { productService } from '../../apis/product.api'
 import PaginationCustom from '../../components/common/Pagination'
 import styled from 'styled-components'
-import SelectCustom from '../../components/common/Select'
 import ProductList from '../../components/ProductList/ProductList'
 import { Spin } from 'antd'
 import { Container } from '../../Global.styled'
 const Home = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['products'],
-    queryFn: () => {
-      return productService.getProducts()
-    }
+  const [pagination, setPagination] = useState({
+    page: 1
   })
 
-  console.log(data?.data.data.data, isLoading, isError)
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ['products', pagination],
+    queryFn: () => {
+      return productService.getProducts(pagination)
+    }
+  })
+  //   console.log(data?.data.data)
 
   if (isLoading) {
     return (
@@ -30,39 +31,23 @@ const Home = () => {
     return <div>Error...</div>
   }
 
+  const handleChangePage = (page: any) => {
+    setPagination({ ...pagination, page: page })
+    refetch()
+  }
+
   const handleAddToCart = () => {}
   return (
     <>
       <Container>
         <StyledH1>Products List</StyledH1>
-        <SearchWrapper>
-          <SelectCustom
-            defaultValue={'Filter By Category'}
-            style={{ width: 200 }}
-            // handleChange={handleChange}
-            // options={options}
-          />
-          <SelectCustom
-            defaultValue={'Sort By Category'}
-            style={{ width: 200 }}
-            // handleChange={handleChange}
-            // options={options}
-          />
-          <SelectCustom
-            defaultValue={'Sort By Category'}
-            style={{ width: 200 }}
-            // handleChange={handleChange}
-            // options={options}
-          />
-        </SearchWrapper>
+
         <ProductsBox>
           {data?.data.data.data.map((product: any) => (
-            <div key={product.id}>
-              {product && <ProductList product={product} handleAddToCart={handleAddToCart} />}
-            </div>
+            <div key={product.id}>{product && <ProductList product={product} handleAddToCart={handleAddToCart} />}</div>
           ))}
         </ProductsBox>
-        <PaginationCustom />
+        <PaginationCustom current={pagination.page} handleChange={handleChangePage} total={data?.data.data.total} />
       </Container>
     </>
   )
