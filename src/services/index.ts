@@ -19,7 +19,7 @@ const apiConfig = axios.create({
 apiConfig.interceptors.request.use(
   function (config) {
     let accessToken = getAccessTokenFromLS()
-    console.log(accessToken)
+    // console.log(accessToken)
 
     // let refreshToken = getRefreshTokenFromLS()
     // Do something before request is sent
@@ -95,9 +95,10 @@ const apiService = {
       })
   },
   /* Making a get request to the urlApi and passing in the params. */
-  get(urlApi: string) {
+  get(urlApi: string, params?: any) {
+    console.log('param = ', params)
     return apiConfig
-      .get(urlApi)
+      .get(urlApi, params)
       .then((response) => response)
       .catch((error) => {
         throw error
