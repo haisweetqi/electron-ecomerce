@@ -80,7 +80,7 @@ const ProductDetails = () => {
                 />
               </ProductImageShow>
               <ProductImageDiff>
-                {data?.data.data.images.slice(1, 2).map((itemImage: any) => (
+                {data?.data.data.images.slice(1, 6).map((itemImage: any) => (
                   <SubImage key={itemImage.id}>
                     <Image
                       width={'100%'}

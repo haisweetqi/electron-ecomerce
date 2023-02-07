@@ -89,6 +89,6 @@ export const StyledH1 = styled.h1`
 export const ProductsBox = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 5rem;
+  gap: 6rem;
   margin: 3rem 0;
 `
