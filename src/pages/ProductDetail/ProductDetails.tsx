@@ -66,11 +66,7 @@ const ProductDetails = () => {
       <ContentWrapper>
         <ProductWrapper>
           <>
-            <ProductImage
-              style={{
-                width: '50%'
-              }}
-            >
+            <ProductImage>
               <ProductImageShow>
                 <Image
                   width={'100%'}
@@ -130,8 +126,10 @@ const ProductDetails = () => {
             </QuantityWrapper>
 
             <AddOrBuy>
-              <StyledButton>Add to cart</StyledButton>
-              <StyledButton>Buy it now</StyledButton>
+              <>
+                <StyledButton>Add to cart</StyledButton>
+                <StyledButton>Buy it now</StyledButton>
+              </>
               <Button
                 onClick={handleLike}
                 size='large'
