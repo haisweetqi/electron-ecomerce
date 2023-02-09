@@ -6,15 +6,17 @@ import styled from 'styled-components'
 import ProductList from '../../components/ProductList/ProductList'
 import { Spin } from 'antd'
 import { Container } from '../../Global.styled'
+import SearchCustom from './../../components/common/Search/SearchCustom'
 const Home = () => {
-  const [pagination, setPagination] = useState({
-    page: 1
+  const [queryConfig, setQueryConfig] = useState({
+    page: 1,
+    search: ''
   })
 
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ['products', pagination],
+    queryKey: ['products', queryConfig],
     queryFn: () => {
-      return productService.getProducts(pagination)
+      return productService.getProducts(queryConfig)
     }
   })
   //   console.log(data?.data.data)
@@ -32,8 +34,12 @@ const Home = () => {
   }
 
   const handleChangePage = (page: any) => {
-    setPagination({ ...pagination, page: page })
+    setQueryConfig({ ...queryConfig, page: page })
     refetch()
+  }
+
+  const handleSearch = (value: any) => {
+    setQueryConfig({ ...queryConfig, search: value })
   }
 
   const handleAddToCart = () => {}
@@ -41,6 +47,13 @@ const Home = () => {
     <>
       <Container>
         <StyledH1>Products List</StyledH1>
+        <SearchCustom
+          handleSearch={handleSearch}
+          placeholder='Search any things'
+          enterButton='Search'
+          size='large'
+          style={{ width: 304 }}
+        />
 
         <ProductsBox>
           {data?.data.data.data.map((product: any) => (
@@ -48,7 +61,7 @@ const Home = () => {
           ))}
         </ProductsBox>
         <PaginationCustom
-          current={pagination.page}
+          current={queryConfig.page}
           pageSize={data?.data.data.per_page}
           handleChange={handleChangePage}
           total={data?.data.data.total}
