@@ -11,12 +11,13 @@ import { useMutation } from '@tanstack/react-query'
 import { authApi } from './../../../apis/auth.api'
 import { toast } from 'react-toastify'
 import HttpStatusCode from '../../../constants/httpStatusCode'
+import { useForm } from 'antd/es/form/Form'
 
 const Login = () => {
   const navigate = useNavigate()
   const userNameRef: React.MutableRefObject<any> = useRef()
   const passwordRef: React.MutableRefObject<any> = useRef()
-
+  const [form] = useForm()
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
 
   /* A hook from react-query. It is a hook that allows us to make a request to the server. */
@@ -31,13 +32,19 @@ const Login = () => {
         if (data.status === 'success') {
           setIsAuthenticated(true)
           setProfile(data.user)
-          navigate('/')
+          setTimeout(() => navigate('/'), 3000)
+
           toast.success('Login successful')
         }
       },
       onError: (error: any) => {
         console.log(error)
-
+        form.setFields([
+          {
+            name: 'email',
+            errors: [error.response.data.message]
+          }
+        ])
         toast.error(error.response.data.message)
       }
     })
@@ -61,6 +68,7 @@ const Login = () => {
         size='large'
         layout='vertical'
         name='normal_login'
+        form={form}
         className='login-form'
         initialValues={{ remember: true }}
         onFinish={handleLogin}

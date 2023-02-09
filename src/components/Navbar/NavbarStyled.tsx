@@ -8,6 +8,9 @@ export const NavBarContainer = styled.div`
 
 export const Wrapper = styled.div`
   background: #f4f4f4;
+  position: sticky;
+  top: 72px;
+  z-index: 100;
 `
 export const NavbarLinkUl = styled.ul`
   display: flex;
@@ -32,4 +35,8 @@ export const StyledLi = styled.li`
   font-weight: 700;
   font-size: 16px;
   color: #003f62;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `

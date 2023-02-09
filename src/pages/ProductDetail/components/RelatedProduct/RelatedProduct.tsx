@@ -3,10 +3,8 @@ import ProductList from '../../../../components/ProductList/ProductList'
 import { ListProduct, RelatedWrapper, StyleH1 } from './relatedProductStyle'
 
 const RelatedProduct = (props: any) => {
-  console.log('11110', props.listProduct)
   const listProduct = props.listProduct || []
   const handleAddToCart = () => {
-    console.log('Add Products')
   }
 
   return (

@@ -19,15 +19,12 @@ const Register = () => {
     registerMutation.mutate(values, {
       onSuccess: (dataSuccess) => {
         const { data } = dataSuccess
-        console.log(data)
         if (data.status === 'success') {
           navigate('/auth/login')
           toast.success('Register successful')
         }
       },
       onError: (error: any) => {
-        console.log(error)
-
         toast.error(error.response.data.message)
       }
     })

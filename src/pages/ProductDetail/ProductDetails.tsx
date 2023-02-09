@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { productService } from '../../apis/product.api'
-import { Button, Divider, Image, Rate } from 'antd'
+import { Button, Rate } from 'antd'
 import {
   AddOrBuy,
-  ButtonCustom,
   ContentWrapper,
   ProductImage,
   ProductImageDiff,
@@ -16,8 +15,6 @@ import {
   QuantityWrapper,
   StyledButton,
   StyledCategory,
-  StyledH2,
-  StyledH3,
   StyledRating,
   StyledShare,
   StyledSpan,
@@ -36,18 +33,31 @@ import Description from './components/Description'
 import Reviews from './components/Reviews'
 import RelatedProduct from './components/RelatedProduct'
 import { Container } from '../../Global.styled'
+import { AppContext } from '../../contexts/auth.context'
+import DividerCustom from '../../components/common/DividerCustom'
+import ImageCustom from '../../components/common/ImageCustom'
+import ButtonCustom from '../../components/common/Button'
 
 const ProductDetails = () => {
+  // const { cart, setCart } = useContext(AppContext)
   const { id } = useParams()
   const { data, isLoading, isError } = useQuery({
     queryKey: ['productDetail', id],
     queryFn: () => productService.getProductsDetails(id as string)
   })
 
-  console.log(data, isLoading, isError)
-
   const [quantity, setQuantity] = useState(1)
   const [like, setLike] = useState(false)
+  const [cart, setCart]: any = useState([])
+  const product = data?.data.data
+
+  // console.log(cart)
+  useEffect(() => {
+    if (localStorage.getItem('cart')) {
+      const newCart = JSON.parse(localStorage.getItem('cart') || '') || []
+      setCart(newCart)
+    }
+  }, [])
 
   const handleDecrease = () => {
     setQuantity((prev) => prev - 1)
@@ -61,6 +71,20 @@ const ProductDetails = () => {
     setLike((prev) => !prev)
   }
 
+  const addToCart = (product: any) => {
+    const updatedCart = [...cart]
+    const existingItemIndex = updatedCart.findIndex((cartItem: any) => cartItem.product.id === product.id)
+    if (existingItemIndex !== -1) {
+      updatedCart[existingItemIndex].quantity += quantity
+      setCart(updatedCart)
+      localStorage.setItem('cart', JSON.stringify(updatedCart))
+    } else {
+      const newCart = [...updatedCart, { product, quantity }]
+      setCart(newCart)
+      localStorage.setItem('cart', JSON.stringify(newCart))
+    }
+  }
+
   return (
     <Container>
       <ContentWrapper>
@@ -68,25 +92,23 @@ const ProductDetails = () => {
           <>
             <ProductImage>
               <ProductImageShow>
-                <Image
+                <ImageCustom
                   width={'100%'}
                   height={'100%'}
-                  style={{ objectFit: 'cover' }}
+                  of={'cover'}
                   src={`http://hung.fresher.ameladev.click/${data?.data.data.images[0].product_image}`}
                 />
               </ProductImageShow>
               <ProductImageDiff>
                 {data?.data.data.images.slice(1, 6).map((itemImage: any) => (
                   <SubImage key={itemImage.id}>
-                    <Image
+                    <ImageCustom
                       width={'100%'}
                       height={'100%'}
                       src={`http://hung.fresher.ameladev.click/${itemImage.product_image}`}
-                      style={{
-                        borderRadius: '16px',
-                        overflow: 'hidden',
-                        objectFit: 'cover'
-                      }}
+                      borderRadius={'16px'}
+                      overflow={'hidden'}
+                      of={'cover'}
                     />
                   </SubImage>
                 ))}
@@ -96,22 +118,26 @@ const ProductDetails = () => {
 
           <ProductInfo>
             <>
-              <StyledH2>{data?.data.data.name}</StyledH2>
-              <StyledH3>{data?.data.data.price}VND</StyledH3>
+              <StyledSpan color='#003f62' fw={500} fs={'3rem'}>
+                {data?.data.data.name}
+              </StyledSpan>
+              <StyledSpan color='#4a4a4a' fw={500} fs={'2.25rem'}>
+                {data?.data.data.price}VND
+              </StyledSpan>
               <StyledRating>
                 <Rate allowHalf disabled value={data?.data.avgRating} />
-                <StyledSpan style={{ fontWeight: '0.8rem' }}>
+                <StyledSpan>
                   {/* {data?.data.reviews.length === 0 ? 'No reviews' : `${data?.data.reviews.length} reviews`} */}
                   No reviews
                 </StyledSpan>
-                <StyledSpan style={{ fontWeight: '0.8rem' }}>49 sold</StyledSpan>
+                <StyledSpan>49 sold</StyledSpan>
               </StyledRating>
             </>
 
-            <Divider style={{ margin: '2.5rem 0' }} />
+            <DividerCustom margin={'2.5rem 0'} />
 
             <QuantityWrapper>
-              <StyledSpan>Quantity : </StyledSpan>
+              <StyledSpan fw={600}>Quantity : </StyledSpan>
               <div
                 style={{
                   display: 'flex',
@@ -127,7 +153,19 @@ const ProductDetails = () => {
 
             <AddOrBuy>
               <>
-                <StyledButton>Add to cart</StyledButton>
+                <StyledButton
+                  onClick={() => {
+                    const productList = {
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      quantity: quantity
+                    }
+                    addToCart(productList)
+                  }}
+                >
+                  Add to cart
+                </StyledButton>
                 <StyledButton>Buy it now</StyledButton>
               </>
               <Button
@@ -141,24 +179,24 @@ const ProductDetails = () => {
               />
             </AddOrBuy>
 
-            <Divider style={{ margin: '2.5rem 0' }} />
+            <DividerCustom margin={'2.5rem 0'} />
 
             <StyledCategory>
               Category:
-              <StyledSpan style={{ fontWeight: 400 }}>20% off</StyledSpan>
-              <StyledSpan style={{ fontWeight: 400 }}>49% off</StyledSpan>
-              <StyledSpan style={{ fontWeight: 400 }}>Alex remote</StyledSpan>
+              <StyledSpan fw={400}>20% off</StyledSpan>
+              <StyledSpan fw={400}>49% off</StyledSpan>
+              <StyledSpan fw={400}>Alex remote</StyledSpan>
             </StyledCategory>
 
             <StyledShare>
               Share:
-              <StyledSpan style={{ fontWeight: 400 }}>
+              <StyledSpan fw={400}>
                 <GoogleOutlined />
               </StyledSpan>
-              <StyledSpan style={{ fontWeight: 400 }}>
+              <StyledSpan fw={400}>
                 <FacebookOutlined />
               </StyledSpan>
-              <StyledSpan style={{ fontWeight: 400 }}>
+              <StyledSpan fw={400}>
                 <WhatsAppOutlined />
               </StyledSpan>
             </StyledShare>
@@ -170,12 +208,32 @@ const ProductDetails = () => {
             centered
             items={[
               {
-                label: <ButtonCustom>Description</ButtonCustom>,
+                label: (
+                  <ButtonCustom
+                    borderRadius='1.25rem'
+                    padding='1.25rem 2rem'
+                    fw={500}
+                    color='#003f62'
+                    background='white'
+                  >
+                    Description
+                  </ButtonCustom>
+                ),
                 key: '1',
                 children: <Description description={data?.data.data.description} />
               },
               {
-                label: <ButtonCustom>Reviews</ButtonCustom>,
+                label: (
+                  <ButtonCustom
+                    borderRadius='1.25rem'
+                    padding='1.25rem 2rem'
+                    fw={500}
+                    color='#003f62'
+                    background='white'
+                  >
+                    Reviews
+                  </ButtonCustom>
+                ),
                 key: '2',
                 children: <Reviews />
               }

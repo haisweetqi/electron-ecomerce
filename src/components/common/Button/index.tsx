@@ -1,8 +1,7 @@
 import React, { ButtonHTMLAttributes } from 'react'
 import ButtonStyles from './buttonCustomStyle'
 
-export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
-  type?: 'button' | 'submit' | undefined
+export interface IButton {
   width?: string
   height?: string
   padding?: string
@@ -11,15 +10,17 @@ export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   borderRadius?: string
   to?: string
   fs?: string
-  fw?: string
+  fw?: string | number
   color?: string
   onClick?: any
   isLoading?: boolean
   zIndex?: string
   children: any
+  colorHover?: string
+  fwHover?: number
+  background?: string
 }
 const ButtonCustom: React.FC<IButton> = ({
-  type,
   width,
   height,
   padding,
@@ -33,7 +34,10 @@ const ButtonCustom: React.FC<IButton> = ({
   onClick = () => {},
   zIndex,
   children,
-  isLoading
+  isLoading,
+  colorHover,
+  fwHover,
+  background
 }) => {
   return (
     <ButtonStyles
@@ -43,13 +47,15 @@ const ButtonCustom: React.FC<IButton> = ({
       border={border}
       padding={padding}
       borderRadius={borderRadius}
-      type={type}
       onClick={onClick}
       isLoading={isLoading}
       zIndex={zIndex}
       fs={fs}
       fw={fw}
       color={color}
+      colorHover={colorHover}
+      fwHover={fwHover}
+      background={background}
     >
       {children}
     </ButtonStyles>

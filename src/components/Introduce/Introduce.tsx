@@ -31,6 +31,10 @@ const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
   padding: 2rem 0;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `
 
 const StyledInfo = styled.div`

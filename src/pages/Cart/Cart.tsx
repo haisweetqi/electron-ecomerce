@@ -7,6 +7,9 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import { StyledCartTotal, StyledCartTotalCheckout, StyledH3, StyledWrapper } from './cartStyle'
 import { Quantity, QuantityWrapper } from '../ProductDetail/productDetailStyle'
 import ButtonCustom from '../../components/common/Button'
+import { Link } from 'react-router-dom'
+import Wrapper from '../../components/common/Wrapper'
+import DividerCustom from '../../components/common/DividerCustom'
 
 interface DataType {
   key: string
@@ -25,9 +28,7 @@ const Cart = () => {
   const handleIncrease = () => {
     setQuantity((prev) => prev + 1)
   }
-  const handleDeleteProduct = () => {
-    console.log('1112')
-  }
+  const handleDeleteProduct = () => {}
   const columns: ColumnsType<DataType> = [
     {
       title: 'Image',
@@ -109,41 +110,56 @@ const Cart = () => {
   return (
     <Container>
       <StyledWrapper>
-        <div style={{ flex: 3 }}>
+        <Wrapper flex='3'>
           <Table columns={columns} dataSource={data} pagination={false} />
-          <div style={{ marginTop: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <ButtonCustom border='none' bgColor='#eda415' borderRadius='2rem' padding='1rem 1rem'>
-              Continue shopping
+          <Wrapper margin='2rem 0 0 0' display='flex' alignItems='center' justifyContent='space-between'>
+            <ButtonCustom
+              border='none'
+              bgColor='#eda415'
+              borderRadius='2rem'
+              padding='1.5rem 2rem'
+              colorHover='white'
+              fw={500}
+            >
+              <Link to={'/'}>Continue shopping</Link>
             </ButtonCustom>
             <ButtonCustom
               border='1px solid #C33131'
               bgColor='#fff'
               borderRadius='2rem'
-              padding='1rem 1rem'
+              padding='1.5rem 2rem'
               color='#C33131'
+              fw={500}
             >
               Clear cart
             </ButtonCustom>
-          </div>
-        </div>
+          </Wrapper>
+        </Wrapper>
         <StyledCartTotal>
           <StyledH3>Cart total</StyledH3>
           <StyledCartTotalCheckout>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem' }}>
+            <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
               <h4>Subtotal</h4>
               <span>$ 23,20</span>
-            </div>
-            <hr />
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem' }}>
+            </Wrapper>
+            <DividerCustom margin='0.5rem' />
+            <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
               <h4>Total amount</h4>
               <span>$ 23,20</span>
-            </div>
+            </Wrapper>
 
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <ButtonCustom border='none' bgColor='#eda415' borderRadius='2rem' padding='0.5rem 1rem'>
+            <Wrapper display='flex' alignItems='center' justifyContent='center'>
+              <ButtonCustom
+                border='none'
+                bgColor='#eda415'
+                borderRadius='2rem'
+                padding='0.8rem 2rem'
+                colorHover='white'
+                fw={500}
+              >
                 Proceed to checkout
               </ButtonCustom>
-            </div>
+            </Wrapper>
           </StyledCartTotalCheckout>
         </StyledCartTotal>
       </StyledWrapper>

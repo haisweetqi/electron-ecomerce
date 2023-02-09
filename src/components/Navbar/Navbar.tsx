@@ -10,12 +10,10 @@ import { Container } from '../../Global.styled'
 
 const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
   message.info('Click on left button.')
-  console.log('click left button', e)
 }
 
 const handleMenuClick: MenuProps['onClick'] = (e) => {
   message.info('Click on menu item.')
-  console.log('click', e)
 }
 
 const items: MenuProps['items'] = [
