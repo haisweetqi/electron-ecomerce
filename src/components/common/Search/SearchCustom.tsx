@@ -3,10 +3,17 @@ import { Input } from 'antd'
 
 const { Search } = Input
 
-const SearchCustom = ({ placeholder, enterButton, style, size }: any) => {
+const SearchCustom = ({ handleSearch, placeholder, enterButton, style, size }: any) => {
   return (
     <>
-      <Search placeholder={placeholder} allowClear enterButton={enterButton} size={size} style={style} />
+      <Search
+        placeholder={placeholder}
+        onSearch={handleSearch}
+        allowClear
+        enterButton={enterButton}
+        size={size}
+        style={style}
+      />
     </>
   )
 }
