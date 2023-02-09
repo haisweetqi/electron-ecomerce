@@ -1,7 +1,8 @@
-import { IButton } from "./index";
-import styled from "styled-components";
+import { IButton } from './index'
+import styled from 'styled-components'
+import { Button } from 'antd'
 
-const ButtonStyles = styled.button<IButton>`
+const ButtonStyles = styled(Button)<IButton>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   padding: ${(props) => props.padding};
@@ -15,6 +16,12 @@ const ButtonStyles = styled.button<IButton>`
   font-size: ${(props) => props.fs};
   font-weight: ${(props) => props.fw};
   color: ${(props) => props.color};
-`;
+  background: ${(props) => props.background};
 
-export default ButtonStyles;
+  :hover {
+    color: ${(props) => props.colorHover} !important;
+    font-weight: ${(props) => props.fwHover} !important;
+  }
+`
+
+export default ButtonStyles

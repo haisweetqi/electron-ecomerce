@@ -44,7 +44,7 @@ const ProductWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 240px;
   overflow: hidden;
   border-radius: 1.25rem;
   border: 1px solid #b6b6b6;

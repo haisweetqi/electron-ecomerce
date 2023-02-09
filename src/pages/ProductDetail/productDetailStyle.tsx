@@ -40,7 +40,6 @@ export const SubImage = styled.div`
 export const ProductImageDiff = styled.div`
   padding: 2rem 1rem;
   display: flex;
-  /* justify-content: space-evenly; */
   align-items: center;
   gap: 2rem;
 `
@@ -58,23 +57,17 @@ export const ProductInfo = styled.div`
   }
 `
 
-export const StyledH2 = styled.h2`
-  font-weight: 500;
-  font-size: 3rem;
-  color: #003f62;
-  /* line-height: 4.5rem; */
-`
-export const StyledH3 = styled.h3`
-  font-weight: 500;
-  font-size: 2.25rem;
-  color: #4a4a4a;
-  line-height: 4rem;
-`
+export interface IStyledSpan {
+  fw?: string | number
+  fs?: string | number
+  lh?: string
+}
 
-export const StyledSpan = styled.span`
-  font-size: 1rem;
+export const StyledSpan = styled.span<IStyledSpan>`
   display: block;
-  font-weight: 500;
+  font-weight: ${(props) => props.fw};
+  font-size: ${(props) => (props.fs ? props.fs : '1rem')};
+  color: ${(props) => props.color};
 `
 
 export const StyledRating = styled.div`
@@ -173,7 +166,7 @@ export const ButtonCustom = styled(Button)`
 `
 
 export const TabsCustom = styled(Tabs)`
-margin-top: 2rem;
+  margin-top: 2rem;
   .ant-tabs-tab.ant-tabs-tab-active button.ant-btn {
     background-color: #003f62;
     color: #ffffff;

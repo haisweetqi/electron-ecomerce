@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import logo from '../../assets/images/logo.png'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
@@ -8,7 +8,7 @@ import { Popover, Avatar, Button } from 'antd'
 import BadgeCustom from '../common/Badge'
 import SearchCustom from './../common/Search/SearchCustom'
 import { AppContext } from '../../contexts/auth.context'
-import { setProfileToLS } from '../../utils/auth'
+import { setCartToLS, setProfileToLS } from '../../utils/auth'
 import { useMutation } from '@tanstack/react-query'
 import { authApi } from '../../apis/auth.api'
 
@@ -19,21 +19,24 @@ const styleBadge = {
 }
 
 const Header = () => {
-  //   const navigate = useNavigate()
+  // const cart = JSON.parse(localStorage.getItem('cart') || '') || []
+  const navigate = useNavigate()
   const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
-  //   console.log(isAuthenticated, setIsAuthenticated)
 
-  //   const logoutMutation = useMutation({
-  //     mutationFn: authApi.logout,
-  //     onSuccess: () => {
-  //       setIsAuthenticated(false)
-  //       setProfileToLS(null)
-  //       navigate('/')
-  //     }
-  //   })
+
+  const logoutMutation = useMutation({
+    mutationFn: authApi.logout,
+    onSuccess: (data) => {
+      setIsAuthenticated(false)
+      setProfileToLS(null)
+      // setCartToLS([])
+
+      navigate('/auth/login')
+    }
+  })
 
   const handleLogout = () => {
-    // logoutMutation.mutate()
+    logoutMutation.mutate()
   }
   const content = (
     <div style={{ width: 130 }}>
@@ -43,7 +46,7 @@ const Header = () => {
       <div>
         <StyledLink to={'/profile'}>Your Cart</StyledLink>
       </div>
-      <Button onClick={handleLogout}>Logout</Button>
+      <Button onClick={() => handleLogout()}>Logout</Button>
     </div>
   )
 
@@ -65,7 +68,7 @@ const Header = () => {
             // <div>{profile?.email}</div>
             <div>
               <AiOutlineUser />
-              <Link to='auth/login'>Sign in</Link>
+              <Link to='/auth/login'>Sign in</Link>
             </div>
           )}
           <div>
@@ -76,7 +79,7 @@ const Header = () => {
           <div>
             <AiOutlineShoppingCart />
             <Link to='/cart'>Cart</Link>
-            <BadgeCustom count={5} style={styleBadge} />
+            <BadgeCustom count={1} style={styleBadge} />
           </div>
         </StyledUser>
       </Container>
@@ -86,9 +89,13 @@ const Header = () => {
 
 export default Header
 
-export const Wrapper = styled.header`
+const Wrapper = styled.header`
   background-color: #003f62;
   padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
   .container {
     display: flex;
     align-items: center;
@@ -96,7 +103,7 @@ export const Wrapper = styled.header`
   }
 `
 
-export const StyledUser = styled.div`
+const StyledUser = styled.div`
   display: flex;
   align-items: center;
   column-gap: 29px;

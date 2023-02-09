@@ -49,3 +49,12 @@ export const clearLS = () => {
   const clearLSEvent = new Event('clearLS')
   LocalStorageEventTarget.dispatchEvent(clearLSEvent)
 }
+
+export const getCartToLS = () => {
+  const result = localStorage.getItem('cart') || ''
+  return result ? JSON.parse(result) : []
+}
+
+export const setCartToLS = (cart: any) => {
+   localStorage.setItem('cart', JSON.stringify(cart)) 
+}
