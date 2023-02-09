@@ -46,12 +46,12 @@ const ProductDetails = () => {
     queryFn: () => productService.getProductsDetails(id as string)
   })
 
+
   const [quantity, setQuantity] = useState(1)
   const [like, setLike] = useState(false)
   const [cart, setCart]: any = useState([])
   const product = data?.data.data
 
-  // console.log(cart)
   useEffect(() => {
     if (localStorage.getItem('cart')) {
       const newCart = JSON.parse(localStorage.getItem('cart') || '') || []

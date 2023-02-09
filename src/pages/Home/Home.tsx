@@ -19,7 +19,6 @@ const Home = () => {
       return productService.getProducts(queryConfig)
     }
   })
-  //   console.log(data?.data.data)
 
   if (isLoading) {
     return (

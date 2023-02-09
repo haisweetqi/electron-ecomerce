@@ -19,7 +19,6 @@ const apiConfig = axios.create({
 apiConfig.interceptors.request.use(
   function (config) {
     let accessToken = getAccessTokenFromLS()
-    // console.log(accessToken)
 
     // let refreshToken = getRefreshTokenFromLS()
     // Do something before request is sent

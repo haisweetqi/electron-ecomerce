@@ -23,12 +23,10 @@ const Header = () => {
   const navigate = useNavigate()
   const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
 
-  console.log('1111111', isAuthenticated)
 
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: (data) => {
-      console.log(data)
       setIsAuthenticated(false)
       setProfileToLS(null)
       // setCartToLS([])
