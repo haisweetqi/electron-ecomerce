@@ -49,7 +49,8 @@ export interface IProduct {
 }
 
 const ProductDetails = () => {
-  // const { cart, setCart } = useContext(AppContext)
+  const { cart, setCart }: any = useContext(AppContext)
+  console.log('cartcartcartcartcartcart', cart)
   const { id } = useParams()
   const { data, isLoading, isError } = useQuery({
     queryKey: ['productDetail', id],
@@ -58,7 +59,7 @@ const ProductDetails = () => {
 
   const [quantity, setQuantity] = useState(1)
   const [like, setLike] = useState(false)
-  const [cart, setCart]: any = useState([])
+  //   const [cart, setCart]: any = useState([])
   const product = data?.data.data
 
   useEffect(() => {

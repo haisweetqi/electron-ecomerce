@@ -13,14 +13,17 @@ interface AppContextInterface {
   setCart: React.Dispatch<React.SetStateAction<Cart | null>>
 }
 
-export const getInitialAppContext: () => AppContextInterface = () => ({
-  isAuthenticated: Boolean(getAccessTokenFromLS()),
-  setIsAuthenticated: () => null,
-  profile: getProfileFromLS(),
-  setProfile: () => null,
-  cart: getCartToLS(),
-  setCart: () => null
-})
+export const getInitialAppContext: () => AppContextInterface = () => {
+  console.log('(getAccessTokenFromLS()', getAccessTokenFromLS())
+  return {
+    isAuthenticated: Boolean(getAccessTokenFromLS()),
+    setIsAuthenticated: () => null,
+    profile: getProfileFromLS(),
+    setProfile: () => null,
+    cart: getCartToLS(),
+    setCart: () => null
+  }
+}
 
 const initialAppContext = getInitialAppContext()
 

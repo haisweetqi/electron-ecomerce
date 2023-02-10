@@ -19,27 +19,22 @@ const styleBadge = {
 }
 
 const Header = () => {
-  const cart = JSON.parse(localStorage.getItem('cart') || '') || []
-  // const cart: any = []
+  //   const cardDefault = localStorage.getItem('cart') ? JSON.parse(localStorage?.getItem('cart') || '') : []
+  //   console.log("localStorage.getItem('cart')localStorage.getItem('cart')", localStorage.getItem('cart'))
+  //   const cart: any = []
+  //   const [cart, setCart] = useState(cardDefault)
   const navigate = useNavigate()
-  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
-
-  // const [cartLength, setCartLength] = useState(cart.length)
-  // useEffect(() => {
-  //   setCartLength(cart.reduce((acc, item) => acc + item.quantity, 0))
-  // }, [cart])
+  const { isAuthenticated, setIsAuthenticated, cart, setCart }: any = useContext(AppContext)
+  console.log(cart)
 
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: (data) => {
       setIsAuthenticated(false)
       setProfileToLS(null)
-      // setCartToLS([])
-
-      navigate('/auth/login')
     }
   })
-
+  console.log('isAuthenticated', isAuthenticated)
   const handleLogout = () => {
     logoutMutation.mutate()
   }
@@ -84,7 +79,7 @@ const Header = () => {
           <div>
             <AiOutlineShoppingCart />
             <Link to='/cart'>Cart</Link>
-            <BadgeCustom count={cart.length} style={styleBadge} />
+            <BadgeCustom count={cart?.length || 0} style={styleBadge} />
           </div>
         </StyledUser>
       </Container>
