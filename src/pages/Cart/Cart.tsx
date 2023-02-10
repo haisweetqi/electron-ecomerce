@@ -7,7 +7,7 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import { StyledCartTotal, StyledCartTotalCheckout, StyledH3, StyledWrapper } from './cartStyle'
 import { QuantityWrapper } from '../ProductDetail/productDetailStyle'
 import ButtonCustom from '../../components/common/Button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Wrapper from '../../components/common/Wrapper'
 import DividerCustom from '../../components/common/DividerCustom'
 import { setCartToLS } from '../../utils/auth'
@@ -29,6 +29,8 @@ const Cart = () => {
   const [total, setTotal] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [shippingTotal, setShippingTotal] = useState(0)
+  const navigate = useNavigate()
+  console.log(cart)
 
   useEffect(() => {
     setTotal(data.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0))
@@ -56,6 +58,12 @@ const Cart = () => {
 
   const convertPrice = (number = 0) => {
     return number.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
+  }
+
+  const handleCheckout = () => {
+    setCart([])
+    setCartToLS([])
+    navigate('/payment')
   }
 
   return (
@@ -133,6 +141,7 @@ const Cart = () => {
             <Popconfirm
               title='Are you sure you want to delete all item?'
               onConfirm={() => {
+                setCart([])
                 setCartToLS([])
                 setData([])
               }}
@@ -179,6 +188,7 @@ const Cart = () => {
                 padding='0.8rem 2rem'
                 colorHover='white'
                 fw={500}
+                onClick={handleCheckout}
               >
                 Proceed to checkout
               </ButtonCustom>

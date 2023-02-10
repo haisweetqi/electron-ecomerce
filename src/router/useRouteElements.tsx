@@ -10,6 +10,8 @@ import Cart from './../pages/Cart'
 import MainLayout from './../Layouts/MainLayout'
 import { AppContext } from '../contexts/auth.context'
 import Profile from '../pages/Profile'
+import Blog from '../pages/Blog/Blog'
+import PaymentSuccess from '../pages/PaymentSuccess/PaymentSuccess'
 
 /* A function that is used to check if the user is authenticated or not. If the user is authenticated,
 it will redirect to the home page. If not, it will redirect to the login page. */
@@ -94,6 +96,18 @@ export default function useRouteElements() {
           <ProductDetails />
         </MainLayout>
       )
+    },
+    {
+      path: path.blog,
+      element: (
+        <MainLayout>
+          <Blog />
+        </MainLayout>
+      )
+    },
+    {
+      path: path.payment,
+      element: <PaymentSuccess />
     }
   ])
   return routeElements
