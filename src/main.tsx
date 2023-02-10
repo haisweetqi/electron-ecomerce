@@ -6,17 +6,20 @@ import { GlobalStyle } from './Global.styled'
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { AppContext, AppProvider } from './contexts/auth.context'
 
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyle />
-      <QueryClientProvider client={queryClient}>
-        <App />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </BrowserRouter>
+    <AppProvider>
+      <BrowserRouter>
+        <GlobalStyle />
+        <QueryClientProvider client={queryClient}>
+          <App />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </BrowserRouter>
+    </AppProvider>
   </React.StrictMode>
 )
