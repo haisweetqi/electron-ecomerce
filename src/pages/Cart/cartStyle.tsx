@@ -1,6 +1,5 @@
-
-import { Button } from "antd"
-import styled from "styled-components"
+import { Button } from 'antd'
+import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
   padding: 6rem 0;
@@ -34,6 +33,6 @@ export const StyledCartTotalCheckout = styled.div`
   display: flex;
   height: 100%;
   padding: 0 1rem;
-  justify-content: center;
+  /* justify-content: space-evenly; */
   flex-direction: column;
 `

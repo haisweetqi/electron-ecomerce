@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import logo from '../../assets/images/logo.png'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
@@ -19,10 +19,15 @@ const styleBadge = {
 }
 
 const Header = () => {
-  // const cart = JSON.parse(localStorage.getItem('cart') || '') || []
+  const cart = JSON.parse(localStorage.getItem('cart') || '') || []
+  // const cart: any = []
   const navigate = useNavigate()
   const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
 
+  const [cartLength, setCartLength] = useState(cart.length)
+  useEffect(() => {
+    setCartLength(cart.reduce((acc, item) => acc + item.quantity, 0))
+  }, [cart])
 
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
@@ -79,7 +84,7 @@ const Header = () => {
           <div>
             <AiOutlineShoppingCart />
             <Link to='/cart'>Cart</Link>
-            <BadgeCustom count={1} style={styleBadge} />
+            <BadgeCustom count={cartLength} style={styleBadge} />
           </div>
         </StyledUser>
       </Container>
