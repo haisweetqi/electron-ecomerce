@@ -3,7 +3,18 @@ import TextArea from 'antd/es/input/TextArea'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const Reviews = ({ reviews }: any) => {
+const reviews = [
+  {
+    rating: 4.7,
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+  },
+  {
+    rating: 4.8,
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
+  }
+]
+
+const Reviews = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const showModal = () => {

@@ -1,19 +1,24 @@
 import axios from 'axios'
-import { getAccessTokenFromLS, getRefreshTokenFromLS, setAccessTokenToLS, setProfileToLS } from './../utils/auth'
+import {
+  clearLS,
+  getAccessTokenFromLS,
+  getRefreshTokenFromLS,
+  setAccessTokenToLS,
+  setProfileToLS
+} from './../utils/auth'
 import { URL_LOGIN, URL_LOGOUT, URL_REGISTER } from './../constants/url'
 
 /* Creating a new instance of axios with the baseURL, headers and timeout. */
 const apiConfig = axios.create({
   baseURL: 'http://hung.fresher.ameladev.click/',
   headers: { 'Content-Type': 'application/json' },
-  timeout: 1000
+  timeout: 10000
 })
 
 /* Intercepting the request and doing something before the request is sent. */
 apiConfig.interceptors.request.use(
   function (config) {
     let accessToken = getAccessTokenFromLS()
-    console.log(accessToken)
 
     // let refreshToken = getRefreshTokenFromLS()
     // Do something before request is sent
@@ -34,7 +39,7 @@ apiConfig.interceptors.request.use(
 apiConfig.interceptors.response.use(
   function (response) {
     let accessToken = getAccessTokenFromLS()
-    let refreshToken = getRefreshTokenFromLS()
+    // let refreshToken = getRefreshTokenFromLS()
     const { url } = response.config
 
     if (url === URL_LOGIN || url === URL_REGISTER) {
@@ -45,9 +50,9 @@ apiConfig.interceptors.response.use(
       //   setRefreshTokenToLS(refreshToken)
       setProfileToLS(data.user)
     } else if (url === URL_LOGOUT) {
-      //   accessToken = ''
+      accessToken = ''
       //   refreshToken = ''
-      //   clearLS()
+      clearLS()
     }
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
@@ -89,9 +94,9 @@ const apiService = {
       })
   },
   /* Making a get request to the urlApi and passing in the params. */
-  get(urlApi: string) {
+  get(urlApi: string, params?: any) {
     return apiConfig
-      .get(urlApi)
+      .get(urlApi, params)
       .then((response) => response)
       .catch((error) => {
         throw error

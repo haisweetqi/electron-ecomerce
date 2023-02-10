@@ -1,21 +1,24 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../../contexts/auth.context'
+import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { productService } from '../../apis/product.api'
 import PaginationCustom from '../../components/common/Pagination'
 import styled from 'styled-components'
-import SelectCustom from '../../components/common/Select'
 import ProductList from '../../components/ProductList/ProductList'
 import { Spin } from 'antd'
+import { Container } from '../../Global.styled'
+import SearchCustom from './../../components/common/Search/SearchCustom'
 const Home = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['products'],
-    queryFn: () => {
-      return productService.getProducts()
-    }
+  const [queryConfig, setQueryConfig] = useState({
+    page: 1,
+    search: ''
   })
 
-  console.log(data?.data.data.data, isLoading, isError)
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ['products', queryConfig],
+    queryFn: () => {
+      return productService.getProducts(queryConfig)
+    }
+  })
 
   if (isLoading) {
     return (
@@ -29,51 +32,46 @@ const Home = () => {
     return <div>Error...</div>
   }
 
+  const handleChangePage = (page: any) => {
+    setQueryConfig({ ...queryConfig, page: page })
+    refetch()
+  }
+
+  const handleSearch = (value: any) => {
+    setQueryConfig({ ...queryConfig, search: value })
+  }
+
   const handleAddToCart = () => {}
   return (
     <>
-      <Wrapper>
+      <Container>
         <StyledH1>Products List</StyledH1>
-        <SearchWrapper>
-          <SelectCustom
-            defaultValue={'Filter By Category'}
-            style={{ width: 200 }}
-            // handleChange={handleChange}
-            // options={options}
-          />
-          <SelectCustom
-            defaultValue={'Sort By Category'}
-            style={{ width: 200 }}
-            // handleChange={handleChange}
-            // options={options}
-          />
-          <SelectCustom
-            defaultValue={'Sort By Category'}
-            style={{ width: 200 }}
-            // handleChange={handleChange}
-            // options={options}
-          />
-        </SearchWrapper>
-        <ProductsContainer>
-          <ProductsBox>
-            {data?.data.data.data.map((product: any) => (
-              <div key={product.id}>
-                <ProductList product={product} handleAddToCart={handleAddToCart} />
-              </div>
-            ))}
-          </ProductsBox>
-        </ProductsContainer>
-        <PaginationCustom />
-      </Wrapper>
+        <SearchCustom
+          handleSearch={handleSearch}
+          placeholder='Search any things'
+          enterButton='Search'
+          size='large'
+          style={{ width: 304 }}
+        />
+
+        <ProductsBox>
+          {data?.data.data.data.map((product: any) => (
+            <div key={product.id}>{product && <ProductList product={product} handleAddToCart={handleAddToCart} />}</div>
+          ))}
+        </ProductsBox>
+        <PaginationCustom
+          current={queryConfig.page}
+          pageSize={data?.data.data.per_page}
+          handleChange={handleChangePage}
+          total={data?.data.data.total}
+        />
+      </Container>
     </>
   )
 }
 
 export default Home
 
-export const Wrapper = styled.div`
-  padding: 0px 61px;
-`
 const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -90,11 +88,9 @@ export const StyledH1 = styled.h1`
   margin: 2rem;
 `
 
-export const ProductsContainer = styled.div``
-
 export const ProductsBox = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
+  gap: 6rem;
   margin: 3rem 0;
 `

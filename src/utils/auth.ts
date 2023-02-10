@@ -1,3 +1,4 @@
+export const LocalStorageEventTarget = new EventTarget()
 /**
  * It takes in a string, and sets it to the local storage
  * @param {string} access_token - The access token that you received from the server.
@@ -41,5 +42,19 @@ export const getProfileFromLS = () => {
 export const setProfileToLS = (profile: any) => {
   localStorage.setItem('profile', JSON.stringify(profile))
 }
+export const clearLS = () => {
+  localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
+  localStorage.removeItem('profile')
+  const clearLSEvent = new Event('clearLS')
+  LocalStorageEventTarget.dispatchEvent(clearLSEvent)
+}
 
-export const clearLS = () => {}
+export const getCartToLS = () => {
+  const result = localStorage.getItem('cart') || ''
+  return result ? JSON.parse(result) : []
+}
+
+export const setCartToLS = (cart: any) => {
+  localStorage.setItem('cart', JSON.stringify(cart))
+}

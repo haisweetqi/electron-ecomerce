@@ -2,7 +2,7 @@ import { Avatar, Button, Image, Tabs } from 'antd'
 import styled from 'styled-components'
 
 export const ContentWrapper = styled.div`
-  padding: 6.25rem 20rem;
+  padding: 6.25rem 0rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,10 +10,18 @@ export const ContentWrapper = styled.div`
 
 export const ProductWrapper = styled.div`
   display: flex;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 
 export const ProductImage = styled.div`
   width: 50%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `
 export const ProductImageShow = styled.div`
   height: 36rem;
@@ -32,45 +40,55 @@ export const SubImage = styled.div`
 export const ProductImageDiff = styled.div`
   padding: 2rem 1rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 2rem;
 `
 
 export const ProductInfo = styled.div`
   width: 50%;
-  padding: 0 4rem;
+  padding-left: 4rem;
+  @media screen and (min-width: 1024px) {
+    padding-right: 4rem;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding-right: 4rem;
+    padding-left: 0;
+  }
 `
 
-export const StyledH2 = styled.h2`
-  font-weight: 500;
-  font-size: 3rem;
-  color: #003f62;
-  /* line-height: 4.5rem; */
-`
-export const StyledH3 = styled.h3`
-  font-weight: 500;
-  font-size: 2.25rem;
-  color: #4a4a4a;
-  line-height: 4rem;
-`
+export interface IStyledSpan {
+  fw?: string | number
+  fs?: string | number
+  lh?: string
+}
 
-export const StyledSpan = styled.span`
-  font-size: 1rem;
+export const StyledSpan = styled.span<IStyledSpan>`
   display: block;
-  font-weight: 500;
+  font-weight: ${(props) => props.fw};
+  font-size: ${(props) => (props.fs ? props.fs : '1rem')};
+  color: ${(props) => props.color};
 `
 
 export const StyledRating = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: 768px) {
+    align-items: flex-start;
+  }
 `
 
 export const QuantityWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  @media screen and (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
 `
 
 export const Quantity = styled.div`
@@ -82,6 +100,15 @@ export const AddOrBuy = styled.div`
   align-items: center;
   gap: 3rem;
   margin: 2rem 0;
+
+  @media screen and (max-width: 1024px) {
+    gap: 2rem;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    flex-direction: column;
+    /* align-items: flex-start; */
+  }
 `
 
 export const StyledButton = styled(Button)`
@@ -93,6 +120,21 @@ export const StyledButton = styled(Button)`
   padding: 2rem 3.5rem;
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 1024px) {
+    padding: 1.5rem 1rem;
+  }
+
+  @media screen and (max-width: 1234px) {
+    padding: 1.5rem 1rem;
+  }
+
+  @media screen and (max-width: 767.98px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 export const StyledCategory = styled.div`
@@ -124,6 +166,7 @@ export const ButtonCustom = styled(Button)`
 `
 
 export const TabsCustom = styled(Tabs)`
+  margin-top: 2rem;
   .ant-tabs-tab.ant-tabs-tab-active button.ant-btn {
     background-color: #003f62;
     color: #ffffff;

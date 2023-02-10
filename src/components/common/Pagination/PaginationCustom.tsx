@@ -1,9 +1,9 @@
 import React from 'react'
 import { Pagination } from 'antd'
-const PaginationCustom = () => {
+const PaginationCustom = ({ current, pageSize, total, handleChange }: any) => {
   return (
     <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-      <Pagination current={1} total={50} />
+      <Pagination current={current} pageSize={pageSize} total={total} onChange={handleChange} />
     </div>
   )
 }

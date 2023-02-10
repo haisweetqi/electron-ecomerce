@@ -1,47 +1,76 @@
-import React, { useState } from 'react'
-import { IoLocationOutline } from 'react-icons/io5'
-import { AiOutlineCar } from 'react-icons/ai'
+import React from 'react'
 import styled from 'styled-components'
+import { DownOutlined } from '@ant-design/icons'
+import type { MenuProps } from 'antd'
+import { Button, Dropdown, message } from 'antd'
+import { NavLink } from 'react-router-dom'
+import { navLinks } from '../../constants/path'
+import { NavBarContainer, NavbarLinkLi, NavbarLinkUl, StyledLi, Wrapper } from './NavbarStyled'
 import { Container } from '../../Global.styled'
+
+const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  message.info('Click on left button.')
+}
+
+const handleMenuClick: MenuProps['onClick'] = (e) => {
+  message.info('Click on menu item.')
+}
+
+const items: MenuProps['items'] = [
+  {
+    label: ' menu item',
+    key: '1'
+  },
+  {
+    label: 'menu item',
+    key: '2'
+  },
+  {
+    label: 'menu item',
+    key: '3'
+  },
+
+  {
+    label: 'menu item',
+    key: '4'
+  }
+]
+
+const menuProps = {
+  items,
+  onClick: handleMenuClick
+}
 
 const Navbar = () => {
   return (
-    <Container>
-      <Nav>
-        <StyledSpan>Need help? Call us: (+98) 0234 456 789</StyledSpan>
-        <StyledInfo>
-          <div>
-            <IoLocationOutline />
-            <StyledSpan>Our store</StyledSpan>
-          </div>
-          <div>
-            <AiOutlineCar />
-            <StyledSpan>Track your order</StyledSpan>
-          </div>
-        </StyledInfo>
-      </Nav>
-    </Container>
+    <Wrapper>
+      <Container>
+        <NavBarContainer>
+          <Dropdown menu={menuProps}>
+            <Button
+              style={{
+                background: '#EDA415',
+                color: '#fff',
+                height: '50px',
+                fontSize: '1rem'
+              }}
+            >
+              Browse categories
+              <DownOutlined />
+            </Button>
+          </Dropdown>
+          <NavbarLinkUl>
+            {navLinks.map((item, index) => (
+              <NavbarLinkLi key={index}>
+                <NavLink to={item.path}>{item.display}</NavLink>
+              </NavbarLinkLi>
+            ))}
+          </NavbarLinkUl>
+          <StyledLi>30 Days Free Return</StyledLi>
+        </NavBarContainer>
+      </Container>
+    </Wrapper>
   )
 }
 
 export default Navbar
-
-const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2rem 0;
-`
-
-const StyledInfo = styled.div`
-  display: flex;
-  align-items: center;
-  column-gap: 2rem;
-`
-
-export const StyledSpan = styled.span`
-  color: #4f4f4f;
-  margin-left: 0.75rem;
-  font-size: 1rem;
-  color: #292d32;
-`
