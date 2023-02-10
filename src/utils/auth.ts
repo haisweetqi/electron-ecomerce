@@ -56,5 +56,5 @@ export const getCartToLS = () => {
 }
 
 export const setCartToLS = (cart: any) => {
-   localStorage.setItem('cart', JSON.stringify(cart)) 
+  localStorage.setItem('cart', JSON.stringify(cart))
 }

@@ -21,6 +21,10 @@ export const StyledH3 = styled.h3`
 `
 
 export const StyledCartTotal = styled.div`
+  position: sticky;
+  top: 154px;
+  bottom: 0px;
+
   flex: 1;
   min-height: 300px;
   border: 1px solid #c3c3c3;
