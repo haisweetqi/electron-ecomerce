@@ -38,6 +38,7 @@ import DividerCustom from '../../components/common/DividerCustom'
 import ImageCustom from '../../components/common/ImageCustom'
 import ButtonCustom from '../../components/common/Button'
 import { toast } from 'react-toastify'
+import { formatCurrency } from '../../utils/rule'
 
 export interface IProduct {
   key: string | number
@@ -134,7 +135,7 @@ const ProductDetails = () => {
                 {data?.data.data.name}
               </StyledSpan>
               <StyledSpan color='#4a4a4a' fw={500} fs={'2.25rem'}>
-                {data?.data.data.price}VND
+                {formatCurrency(data?.data.data.price)}VND
               </StyledSpan>
               <StyledRating>
                 <Rate allowHalf disabled value={data?.data.avgRating} />
