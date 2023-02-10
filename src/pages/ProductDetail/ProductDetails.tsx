@@ -37,6 +37,7 @@ import { AppContext } from '../../contexts/auth.context'
 import DividerCustom from '../../components/common/DividerCustom'
 import ImageCustom from '../../components/common/ImageCustom'
 import ButtonCustom from '../../components/common/Button'
+import { toast } from 'react-toastify'
 
 export interface IProduct {
   key: string | number
@@ -93,6 +94,7 @@ const ProductDetails = () => {
       setCart(newCart)
       localStorage.setItem('cart', JSON.stringify(newCart))
     }
+    toast.success('Add Product Successfully')
   }
 
   return (
