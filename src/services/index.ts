@@ -50,7 +50,7 @@ apiConfig.interceptors.response.use(
       //   setRefreshTokenToLS(refreshToken)
       setProfileToLS(data.user)
     } else if (url === URL_LOGOUT) {
-      accessToken = ''
+      //   accessToken = ''
       //   refreshToken = ''
       clearLS()
     }

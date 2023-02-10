@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { useMutation } from '@tanstack/react-query'
 import { authApi } from './../../../apis/auth.api'
 import { toast } from 'react-toastify'
+import HttpStatusCode from './../../../constants/httpStatusCode'
 
 const Register = () => {
   const navigate = useNavigate()
@@ -19,7 +20,7 @@ const Register = () => {
     registerMutation.mutate(values, {
       onSuccess: (dataSuccess) => {
         const { data } = dataSuccess
-        if (data.status === 'success') {
+        if (data.status === HttpStatusCode.Ok) {
           navigate('/auth/login')
           toast.success('Register successful')
         }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Image, Space, Table, Button, Popconfirm } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { Container } from '../../Global.styled'
@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import Wrapper from '../../components/common/Wrapper'
 import DividerCustom from '../../components/common/DividerCustom'
 import { setCartToLS } from '../../utils/auth'
+import { AppContext } from '../../contexts/auth.context'
 
 interface Item {
   key: number
@@ -22,19 +23,17 @@ interface Item {
   discount: 10
 }
 
-const dataSource: Array<Item> = JSON.parse(localStorage.getItem('cart') || '') || []
-console.log('dataSource', dataSource)
-
 const Cart = () => {
-  const [data, setData] = useState(dataSource)
+  const { isAuthenticated, setIsAuthenticated, cart, setCart }: any = useContext(AppContext)
+  const [data, setData] = useState(cart)
   const [total, setTotal] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [shippingTotal, setShippingTotal] = useState(0)
 
   useEffect(() => {
-    setTotal(data.reduce((acc, item) => acc + item.price * item.quantity, 0))
-    setDiscount(data.reduce((acc, item) => acc + (item.discount * item.price * item.quantity) / 100, 0))
-    setShippingTotal(data.reduce((acc, item) => acc + item.discount, 0))
+    setTotal(data.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0))
+    setDiscount(data.reduce((acc: any, item: any) => acc + (item.discount * item.price * item.quantity) / 100, 0))
+    setShippingTotal(data.reduce((acc: any, item: any) => acc + item.discount, 0))
   }, [data])
 
   const handleDecrease = (key: number) => {
@@ -109,14 +108,14 @@ const Cart = () => {
                 <Popconfirm
                   title='Are you sure you want to delete this item?'
                   onConfirm={() => {
-                    const newData = data.filter((item) => item.key !== record.key)
+                    const newData = data.filter((item: any) => item.key !== record.key)
                     setData(newData)
                   }}
-                  >
+                >
                   <ButtonCustom border='none' children={<AiOutlineCloseCircle fontSize={'1.5rem'} />} />
                 </Popconfirm>
               )}
-              />
+            />
           </Table>
 
           <Wrapper margin='2rem 0 0 0' display='flex' alignItems='center' justifyContent='space-between'>
@@ -127,7 +126,7 @@ const Cart = () => {
               padding='1.5rem 2rem'
               colorHover='white'
               fw={500}
-              >
+            >
               <Link to={'/'}>Continue shopping</Link>
             </ButtonCustom>
 
@@ -137,7 +136,7 @@ const Cart = () => {
                 setCartToLS([])
                 setData([])
               }}
-              >
+            >
               <ButtonCustom
                 border='1px solid #C33131'
                 bgColor='#fff'
