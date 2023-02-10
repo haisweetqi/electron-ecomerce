@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons'
-import { Avatar, Button, Form, Upload } from 'antd'
+import { useQuery } from '@tanstack/react-query'
+import { Avatar, Button, Form, Radio, RadioChangeEvent, Spin, Upload } from 'antd'
 // import { RcFile } from 'antd/es/upload'
 import React from 'react'
+import { userService } from '../../../../apis/user.api'
 import { EditForm, InputCustom, UploadWrapper } from './informationStyle'
 
 // const beforeUpload = (file: RcFile) => {
@@ -16,36 +19,66 @@ import { EditForm, InputCustom, UploadWrapper } from './informationStyle'
 //   return isJpgOrPng && isLt2M
 // }
 const Information = () => {
-  const info = [
-    { key: '1', label: 'Email', placeholder: 'Email' },
-    { key: '2', label: 'Name', placeholder: 'Name' },
-    { key: '3', label: 'Phone', placeholder: 'Phone' },
-    { key: '4', label: 'Address', placeholder: 'Address' },
-    { key: '5', label: 'Birthday', placeholder: 'Birthday' }
-  ]
+  const marginBottom = { marginBottom: '2rem' }
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ['user_account'],
+    queryFn: () => {
+      return userService.getUserAccount()
+    }
+  })
+  const user = data?.data.data
+  const [value, setValue] = useState(1)
+
+  const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value)
+    setValue(e.target.value)
+  }
+
+  if (isLoading) {
+    return (
+      <div>
+        <Spin />
+      </div>
+    )
+  }
+
+  if (isError) {
+    return <div>Error...</div>
+  }
 
   return (
     <EditForm>
       <Form style={{ width: '50%' }} labelCol={{ span: 4 }} wrapperCol={{ span: 24 }}>
-        {info.map((itemInfo: any, index: any) => (
-          <Form.Item
-            key={index}
-            colon={false}
-            label={itemInfo.label}
-            style={{
-              marginBottom: '2rem'
-            }}
-          >
-            <InputCustom placeholder={itemInfo.placeholder} />
-          </Form.Item>
-        ))}
+        <Form.Item colon={false} style={marginBottom} label={'Name'}>
+          <InputCustom placeholder={'Name'} value={user.name} />
+        </Form.Item>
+
+        <Form.Item colon={false} style={marginBottom} label={'Email'}>
+          <InputCustom placeholder={'Email'} value={user.email} />
+        </Form.Item>
+
+        <Form.Item colon={false} style={marginBottom} label={'Phone'}>
+          <InputCustom placeholder={'Phone'} value={user.phone} />
+        </Form.Item>
+
+        <Form.Item colon={false} style={marginBottom} label={'Address'}>
+          <InputCustom placeholder={'Address'} value={user.address} />
+        </Form.Item>
+
+        <Form.Item colon={false} style={marginBottom} label={'Birthday'}>
+          <InputCustom placeholder={'Birthday'} value={user.dob} />
+        </Form.Item>
+
+        <Form.Item colon={false} style={marginBottom} label={'Gender'}>
+          <Radio.Group onChange={onChange} value={value}>
+            <Radio value={1}>Nam</Radio>
+            <Radio value={2}>Nu</Radio>
+          </Radio.Group>
+        </Form.Item>
       </Form>
 
       <UploadWrapper>
-        <Avatar
-          size={{ xs: 84, sm: 82, md: 90, lg: 114, xl: 120, xxl: 150 }}
-          src='https://cdn.pixabay.com/photo/2020/05/09/13/29/photographer-5149664_960_720.jpg'
-        />
+        <Avatar size={{ xs: 84, sm: 82, md: 90, lg: 114, xl: 120, xxl: 150 }} src={user.image} />
 
         <Upload>
           <Button icon={<UploadOutlined />}>Upload</Button>
