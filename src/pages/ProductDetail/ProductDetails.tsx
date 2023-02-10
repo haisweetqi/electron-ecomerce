@@ -38,6 +38,16 @@ import DividerCustom from '../../components/common/DividerCustom'
 import ImageCustom from '../../components/common/ImageCustom'
 import ButtonCustom from '../../components/common/Button'
 
+export interface IProduct {
+  key: string | number
+  name: string
+  image: string
+  price: number
+  quantity: number
+  shipping: number
+  discount: number
+}
+
 const ProductDetails = () => {
   // const { cart, setCart } = useContext(AppContext)
   const { id } = useParams()
@@ -45,7 +55,6 @@ const ProductDetails = () => {
     queryKey: ['productDetail', id],
     queryFn: () => productService.getProductsDetails(id as string)
   })
-
 
   const [quantity, setQuantity] = useState(1)
   const [like, setLike] = useState(false)
@@ -71,15 +80,15 @@ const ProductDetails = () => {
     setLike((prev) => !prev)
   }
 
-  const addToCart = (product: any) => {
+  const addToCart = (product: IProduct) => {
     const updatedCart = [...cart]
-    const existingItemIndex = updatedCart.findIndex((cartItem: any) => cartItem.product.id === product.id)
+    const existingItemIndex = updatedCart.findIndex((cartItem: IProduct) => cartItem.key === product.key)
     if (existingItemIndex !== -1) {
       updatedCart[existingItemIndex].quantity += quantity
       setCart(updatedCart)
       localStorage.setItem('cart', JSON.stringify(updatedCart))
     } else {
-      const newCart = [...updatedCart, { product, quantity }]
+      const newCart = [...updatedCart, product]
       setCart(newCart)
       localStorage.setItem('cart', JSON.stringify(newCart))
     }
@@ -156,10 +165,13 @@ const ProductDetails = () => {
                 <StyledButton
                   onClick={() => {
                     const productList = {
-                      id: product.id,
+                      key: product.id,
+                      image: product.images[0].product_image,
                       name: product.name,
                       price: product.price,
-                      quantity: quantity
+                      quantity: quantity,
+                      shipping: 10000,
+                      discount: 10
                     }
                     addToCart(productList)
                   }}

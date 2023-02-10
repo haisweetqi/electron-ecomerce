@@ -1,65 +1,43 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Image, Space, Table, Button, Popconfirm } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { Container } from '../../Global.styled'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import { StyledCartTotal, StyledCartTotalCheckout, StyledH3, StyledWrapper } from './cartStyle'
-import { Quantity, QuantityWrapper } from '../ProductDetail/productDetailStyle'
+import { QuantityWrapper } from '../ProductDetail/productDetailStyle'
 import ButtonCustom from '../../components/common/Button'
 import { Link } from 'react-router-dom'
 import Wrapper from '../../components/common/Wrapper'
 import DividerCustom from '../../components/common/DividerCustom'
-
-interface DataType {
-  key: string
-  image: string
-  name: string
-  price: number
-  quantity: number
-  subtotal: number
-}
+import { setCartToLS } from '../../utils/auth'
 
 interface Item {
-  key: string
+  key: number
   image: string
   name: string
-  age: number
-  address: string
   price: number
   quantity: number
+  shipping: 100000
+  discount: 10
 }
 
-const dataSource: DataType[] = [
-  {
-    key: '1',
-    image: 'https://kenh14cdn.com/thumb_w/660/2020/5/28/0-1590653959375414280410.jpg',
-    name: 'John Brown',
-    price: 32,
-    quantity: 12,
-    subtotal: 120
-  },
-  {
-    key: '2',
-    image: 'https://kenh14cdn.com/thumb_w/660/2020/5/28/0-1590653959375414280410.jpg',
-    name: 'John Brown',
-    price: 32,
-    quantity: 12,
-    subtotal: 120
-  },
-  {
-    key: '3',
-    image: 'https://kenh14cdn.com/thumb_w/660/2020/5/28/0-1590653959375414280410.jpg',
-    name: 'John Brown',
-    price: 32,
-    quantity: 12,
-    subtotal: 120
-  }
-]
+const dataSource: Array<Item> = JSON.parse(localStorage.getItem('cart') || '') || []
+console.log('dataSource', dataSource)
 
 const Cart = () => {
   const [data, setData] = useState(dataSource)
-  const handleDecrease = (key: string) => {
+  const [total, setTotal] = useState(0)
+  const [discount, setDiscount] = useState(0)
+  const [shippingTotal, setShippingTotal] = useState(0)
+
+  useEffect(() => {
+    setTotal(data.reduce((acc, item) => acc + item.price * item.quantity, 0))
+    setDiscount(data.reduce((acc, item) => acc + (item.discount * item.price * item.quantity) / 100, 0))
+    setShippingTotal(data.reduce((acc, item) => acc + item.discount, 0))
+  }, [data])
+
+  const handleDecrease = (key: number) => {
     const newData = [...data]
     const target = newData.find((item) => item.key === key)
     if (target) {
@@ -68,13 +46,17 @@ const Cart = () => {
     }
   }
 
-  const handleIncrease = (key: string) => {
+  const handleIncrease = (key: number) => {
     const newData = [...data]
     const target = newData.find((item) => item.key === key)
     if (target) {
       target.quantity += 1
       setData(newData)
     }
+  }
+
+  const convertPrice = (number = 0) => {
+    return number.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
   }
 
   return (
@@ -85,9 +67,18 @@ const Cart = () => {
             <Table.Column
               title='Image'
               key='image'
-              render={(text, record: Item) => <Image width={100} src={record.image} alt='image-product' />}
+              render={(_, record: Item) => (
+                <>
+                  <Image width={100} src={`http://hung.fresher.ameladev.click/${record.image}`} alt='image-product' />
+                </>
+              )}
             />
-            <Table.Column title='Price' dataIndex='price' key='price' />
+            <Table.Column
+              title='Price'
+              dataIndex='price'
+              key='price'
+              render={(_, record: Item) => <>{convertPrice(record.price)} </>}
+            />
             <Table.Column
               title='Quantity'
               key='quantity'
@@ -103,10 +94,12 @@ const Cart = () => {
                 </QuantityWrapper>
               )}
             />
+            <Table.Column title='Shipping cost' dataIndex='shipping' key='shipping' />
+            <Table.Column title='Discount (%)' dataIndex='discount' key='discount' />
             <Table.Column
-              title='Subtotal'
-              key='subtotal'
-              render={(text, record: Item) => <>{record.quantity * record.price} </>}
+              title='OrderTotal'
+              key='orderTotal'
+              render={(text, record: Item) => <>{convertPrice(record.quantity * record.price)} </>}
             />
 
             <Table.Column
@@ -119,11 +112,11 @@ const Cart = () => {
                     const newData = data.filter((item) => item.key !== record.key)
                     setData(newData)
                   }}
-                >
+                  >
                   <ButtonCustom border='none' children={<AiOutlineCloseCircle fontSize={'1.5rem'} />} />
                 </Popconfirm>
               )}
-            />
+              />
           </Table>
 
           <Wrapper margin='2rem 0 0 0' display='flex' alignItems='center' justifyContent='space-between'>
@@ -134,32 +127,49 @@ const Cart = () => {
               padding='1.5rem 2rem'
               colorHover='white'
               fw={500}
-            >
+              >
               <Link to={'/'}>Continue shopping</Link>
             </ButtonCustom>
-            <ButtonCustom
-              border='1px solid #C33131'
-              bgColor='#fff'
-              borderRadius='2rem'
-              padding='1.5rem 2rem'
-              color='#C33131'
-              fw={500}
-            >
-              Clear cart
-            </ButtonCustom>
+
+            <Popconfirm
+              title='Are you sure you want to delete all item?'
+              onConfirm={() => {
+                setCartToLS([])
+                setData([])
+              }}
+              >
+              <ButtonCustom
+                border='1px solid #C33131'
+                bgColor='#fff'
+                borderRadius='2rem'
+                padding='1.5rem 2rem'
+                color='#C33131'
+                fw={500}
+              >
+                Clear cart
+              </ButtonCustom>
+            </Popconfirm>
           </Wrapper>
         </Wrapper>
         <StyledCartTotal>
           <StyledH3>Cart total</StyledH3>
           <StyledCartTotalCheckout>
             <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
-              <h4>Subtotal</h4>
-              <span>$ 23,20</span>
+              <h4>Product Subtotal</h4>
+              <span>{convertPrice(total)}</span>
             </Wrapper>
-            <DividerCustom margin='0.5rem' />
+            <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
+              <h4>Discount</h4>
+              <span>{convertPrice(discount)}</span>
+            </Wrapper>
+            <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
+              <h4>Shipping Total</h4>
+              <span>{convertPrice(shippingTotal)}</span>
+            </Wrapper>
+            <DividerCustom />
             <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
               <h4>Total amount</h4>
-              <span>$ 23,20</span>
+              <span>{convertPrice(total - shippingTotal - discount)}</span>
             </Wrapper>
 
             <Wrapper display='flex' alignItems='center' justifyContent='center'>
