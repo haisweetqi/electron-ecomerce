@@ -4,7 +4,9 @@ export const path = {
   register: '/auth/register',
   profile: '/profile',
   cart: '/cart',
-  productDetail: '/product/:id'
+  productDetail: '/product/:id',
+  blog: '/blog',
+  payment: 'payment'
 }
 
 export const navLinks = [
