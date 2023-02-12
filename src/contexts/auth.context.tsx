@@ -14,7 +14,6 @@ interface AppContextInterface {
 }
 
 export const getInitialAppContext: () => AppContextInterface = () => {
-  console.log('(getAccessTokenFromLS()', getAccessTokenFromLS())
   return {
     isAuthenticated: Boolean(getAccessTokenFromLS()),
     setIsAuthenticated: () => null,

@@ -50,8 +50,6 @@ apiConfig.interceptors.response.use(
       //   setRefreshTokenToLS(refreshToken)
       setProfileToLS(data.user)
     } else if (url === URL_LOGOUT) {
-      //   accessToken = ''
-      //   refreshToken = ''
       clearLS()
     }
     // Any status code that lie within the range of 2xx cause this function to trigger
