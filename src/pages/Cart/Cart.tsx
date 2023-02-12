@@ -30,7 +30,6 @@ const Cart = () => {
   const [discount, setDiscount] = useState(0)
   const [shippingTotal, setShippingTotal] = useState(0)
   const navigate = useNavigate()
-  console.log(cart)
 
   useEffect(() => {
     setTotal(cart.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0))
