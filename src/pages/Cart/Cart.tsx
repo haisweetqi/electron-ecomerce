@@ -7,7 +7,7 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import { StyledCartTotal, StyledCartTotalCheckout, StyledH3, StyledWrapper } from './cartStyle'
 import { QuantityWrapper } from '../ProductDetail/productDetailStyle'
 import ButtonCustom from '../../components/common/Button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Wrapper from '../../components/common/Wrapper'
 import DividerCustom from '../../components/common/DividerCustom'
 import { setCartToLS } from '../../utils/auth'
@@ -25,32 +25,34 @@ interface Item {
 
 const Cart = () => {
   const { isAuthenticated, setIsAuthenticated, cart, setCart }: any = useContext(AppContext)
-  const [data, setData] = useState(cart)
+
   const [total, setTotal] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [shippingTotal, setShippingTotal] = useState(0)
+  const navigate = useNavigate()
+  console.log(cart)
 
   useEffect(() => {
-    setTotal(data.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0))
-    setDiscount(data.reduce((acc: any, item: any) => acc + (item.discount * item.price * item.quantity) / 100, 0))
-    setShippingTotal(data.reduce((acc: any, item: any) => acc + item.discount, 0))
-  }, [data])
+    setTotal(cart.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0))
+    setDiscount(cart.reduce((acc: any, item: any) => acc + (item.discount * item.price * item.quantity) / 100, 0))
+    setShippingTotal(cart.reduce((acc: any, item: any) => acc + item.discount, 0))
+  }, [cart])
 
   const handleDecrease = (key: number) => {
-    const newData = [...data]
+    const newData = [...cart]
     const target = newData.find((item) => item.key === key)
     if (target) {
       target.quantity -= 1
-      setData(newData)
+      setCart(newData)
     }
   }
 
   const handleIncrease = (key: number) => {
-    const newData = [...data]
+    const newData = [...cart]
     const target = newData.find((item) => item.key === key)
     if (target) {
       target.quantity += 1
-      setData(newData)
+      setCart(newData)
     }
   }
 
@@ -58,11 +60,17 @@ const Cart = () => {
     return number.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
   }
 
+  const handleCheckout = () => {
+    setCart([])
+    setCartToLS([])
+    navigate('/payment')
+  }
+
   return (
     <Container>
       <StyledWrapper>
         <Wrapper flex='3'>
-          <Table dataSource={data} pagination={false}>
+          <Table dataSource={cart} pagination={false}>
             <Table.Column
               title='Image'
               key='image'
@@ -108,8 +116,8 @@ const Cart = () => {
                 <Popconfirm
                   title='Are you sure you want to delete this item?'
                   onConfirm={() => {
-                    const newData = data.filter((item: any) => item.key !== record.key)
-                    setData(newData)
+                    const newData = cart.filter((item: any) => item.key !== record.key)
+                    setCart(newData)
                   }}
                 >
                   <ButtonCustom border='none' children={<AiOutlineCloseCircle fontSize={'1.5rem'} />} />
@@ -133,8 +141,8 @@ const Cart = () => {
             <Popconfirm
               title='Are you sure you want to delete all item?'
               onConfirm={() => {
+                setCart([])
                 setCartToLS([])
-                setData([])
               }}
             >
               <ButtonCustom
@@ -144,6 +152,7 @@ const Cart = () => {
                 padding='1.5rem 2rem'
                 color='#C33131'
                 fw={500}
+                disabled={cart.length === 0}
               >
                 Clear cart
               </ButtonCustom>
@@ -179,6 +188,8 @@ const Cart = () => {
                 padding='0.8rem 2rem'
                 colorHover='white'
                 fw={500}
+                onClick={handleCheckout}
+                disabled={cart.length === 0}
               >
                 Proceed to checkout
               </ButtonCustom>

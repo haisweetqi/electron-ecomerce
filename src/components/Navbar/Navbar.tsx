@@ -7,41 +7,42 @@ import { NavLink } from 'react-router-dom'
 import { navLinks } from '../../constants/path'
 import { NavBarContainer, NavbarLinkLi, NavbarLinkUl, StyledLi, Wrapper } from './NavbarStyled'
 import { Container } from '../../Global.styled'
-
-const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-  message.info('Click on left button.')
-}
-
-const handleMenuClick: MenuProps['onClick'] = (e) => {
-  message.info('Click on menu item.')
-}
-
-const items: MenuProps['items'] = [
-  {
-    label: ' menu item',
-    key: '1'
-  },
-  {
-    label: 'menu item',
-    key: '2'
-  },
-  {
-    label: 'menu item',
-    key: '3'
-  },
-
-  {
-    label: 'menu item',
-    key: '4'
-  }
-]
-
-const menuProps = {
-  items,
-  onClick: handleMenuClick
-}
+import { useQuery } from '@tanstack/react-query'
+import { categoryService } from '../../apis/category.api'
 
 const Navbar = () => {
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    message.info('Click on left button.')
+  }
+
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    message.info('Click on menu item.')
+  }
+
+  const items: MenuProps['items'] = [
+    {
+      label: ' Ao nam 1',
+      key: '1'
+    },
+    {
+      label: 'Ao nam 2',
+      key: '2'
+    },
+    {
+      label: 'Ao nam 3',
+      key: '3'
+    },
+
+    {
+      label: 'Ao nam 4',
+      key: '4'
+    }
+  ]
+
+  const menuProps = {
+    items,
+    onClick: handleMenuClick
+  }
   return (
     <Wrapper>
       <Container>

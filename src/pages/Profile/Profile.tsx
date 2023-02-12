@@ -4,6 +4,7 @@ import React from 'react'
 import ButtonCustom from '../../components/common/Button'
 import ChangePassword from './components/ChangePassword'
 import Information from './components/InformationAccount'
+import MyOrder from './components/MyOrder/MyOrder'
 import {
   ItemWrapper,
   ProfileInfo,
@@ -46,7 +47,7 @@ const Profile = () => {
         </span>
       ),
       title: 'My Order',
-      children: 'My order',
+      children: <MyOrder />,
       isChange: false
     }
   ]
