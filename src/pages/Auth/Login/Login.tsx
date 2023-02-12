@@ -37,13 +37,6 @@ const Login = () => {
         // }
       },
       onError: (error: any) => {
-        console.log(error)
-        form.setFields([
-          {
-            name: 'email',
-            errors: [error.response.data.message]
-          }
-        ])
         toast.error(error.response.data.message)
       }
     })

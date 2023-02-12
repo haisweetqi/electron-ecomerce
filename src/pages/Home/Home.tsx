@@ -2,17 +2,21 @@ import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { productService } from '../../apis/product.api'
 import PaginationCustom from '../../components/common/Pagination'
-import styled from 'styled-components'
 import ProductList from '../../components/ProductList/ProductList'
 import { Spin } from 'antd'
 import { Container } from '../../Global.styled'
-import SearchCustom from './../../components/common/Search/SearchCustom'
+
 import { ProductsBox, StyledH1 } from './HomeStyle'
+import SearchWrapper from './components/SearchWrapper/SearchWrapper'
 const Home = () => {
-  const [queryConfig, setQueryConfig]: any = useState({
+  const initialValue = {
     page: 1,
-    search: undefined
-  })
+    name: undefined,
+    price: undefined,
+    time: undefined,
+    sort: undefined
+  }
+  const [queryConfig, setQueryConfig]: any = useState(initialValue)
 
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['products', queryConfig],
@@ -39,7 +43,7 @@ const Home = () => {
   }
 
   const handleSearch = (value: any) => {
-    setQueryConfig({ ...queryConfig, search: value })
+    setQueryConfig({ ...queryConfig, name: value.name, price: value.price, time: value.time, sort: value.sort })
     refetch()
   }
 
@@ -47,13 +51,7 @@ const Home = () => {
     <>
       <Container>
         <StyledH1>Products List</StyledH1>
-        <SearchCustom
-          handleSearch={handleSearch}
-          placeholder='Search any things'
-          enterButton='Search'
-          size='large'
-          style={{ width: 304 }}
-        />
+        <SearchWrapper handleSearch={handleSearch} />
 
         <ProductsBox>
           {data?.data.data.data.map((product: any) => (

@@ -26,7 +26,7 @@ export const StyledCartTotal = styled.div`
   bottom: 0px;
 
   flex: 1;
-  min-height: 300px;
+  height: 100%;
   border: 1px solid #c3c3c3;
   @media screen and (max-width: 998px) {
     margin-top: 2rem;
