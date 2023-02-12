@@ -6,15 +6,15 @@ export interface IImage {
   width?: number | string
   height?: number | string
   of?: string
-  borderRadius?: number | string
+  borderradius?: number | string
   overflow?: string
-    children?: any
-    src?: any
+  children?: any
+  src?: any
 }
 
-const ImageCustom: React.FC<IImage> = ({ width, height, of, borderRadius, overflow, children, src }) => {
+const ImageCustom: React.FC<IImage> = ({ width, height, of, borderradius, overflow, children, src }) => {
   return (
-    <ImageCus width={width} height={height} of={of} overflow={overflow} borderRadius={borderRadius} src={src}>
+    <ImageCus width={width} height={height} of={of} overflow={overflow} borderradius={borderradius} src={src}>
       {children}
     </ImageCus>
   )
@@ -23,9 +23,9 @@ const ImageCustom: React.FC<IImage> = ({ width, height, of, borderRadius, overfl
 export default ImageCustom
 
 const ImageCus = styled(Image)<IImage>`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  object-fit: ${(props) => props.of};
-  overflow: ${(props) => props.overflow};
-  border-radius: ${(props) => props.borderRadius};
+  width: ${(props) => props?.width};
+  height: ${(props) => props?.height};
+  object-fit: ${(props) => props?.of};
+  overflow: ${(props) => props?.overflow};
+  border-radius: ${(props) => props?.borderradius};
 `
