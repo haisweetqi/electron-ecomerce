@@ -19,6 +19,7 @@ export interface IButton {
   colorHover?: string
   fwHover?: number
   background?: string
+  disabled?: any
 }
 const ButtonCustom: React.FC<IButton> = ({
   width,
@@ -37,7 +38,8 @@ const ButtonCustom: React.FC<IButton> = ({
   isLoading,
   colorHover,
   fwHover,
-  background
+  background,
+  disabled
 }) => {
   return (
     <ButtonStyles
@@ -56,6 +58,7 @@ const ButtonCustom: React.FC<IButton> = ({
       colorHover={colorHover}
       fwHover={fwHover}
       background={background}
+      disabled={disabled}
     >
       {children}
     </ButtonStyles>

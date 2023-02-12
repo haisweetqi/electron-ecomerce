@@ -152,6 +152,7 @@ const Cart = () => {
                 padding='1.5rem 2rem'
                 color='#C33131'
                 fw={500}
+                disabled={cart.length === 0}
               >
                 Clear cart
               </ButtonCustom>
@@ -188,6 +189,7 @@ const Cart = () => {
                 colorHover='white'
                 fw={500}
                 onClick={handleCheckout}
+                disabled={cart.length === 0}
               >
                 Proceed to checkout
               </ButtonCustom>
