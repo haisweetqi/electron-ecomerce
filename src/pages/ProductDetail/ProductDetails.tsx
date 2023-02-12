@@ -52,7 +52,7 @@ export interface IProduct {
 
 const ProductDetails = () => {
   const { cart, setCart }: any = useContext(AppContext)
-  console.log('cartcartcartcartcartcart', cart)
+
   const { id } = useParams()
   const { data, isLoading, isError } = useQuery({
     queryKey: ['productDetail', id],
@@ -119,7 +119,7 @@ const ProductDetails = () => {
                       width={'100%'}
                       height={'100%'}
                       src={`http://hung.fresher.ameladev.click/${itemImage.product_image}`}
-                      borderRadius={'16px'}
+                      borderradius={'16px'}
                       overflow={'hidden'}
                       of={'cover'}
                     />
@@ -226,7 +226,7 @@ const ProductDetails = () => {
               {
                 label: (
                   <ButtonCustom
-                    borderRadius='1.25rem'
+                    borderradius='1.25rem'
                     padding='1.25rem 2rem'
                     fw={500}
                     color='#003f62'
@@ -241,7 +241,7 @@ const ProductDetails = () => {
               {
                 label: (
                   <ButtonCustom
-                    borderRadius='1.25rem'
+                    borderradius='1.25rem'
                     padding='1.25rem 2rem'
                     fw={500}
                     color='#003f62'

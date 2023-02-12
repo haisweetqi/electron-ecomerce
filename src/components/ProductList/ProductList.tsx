@@ -5,8 +5,6 @@ import styled from 'styled-components'
 import { formatCurrency } from '../../utils/rule'
 const { Meta } = Card
 const ProductList = ({ product }: any) => {
-  console.log('222', product)
-
   const data = product || []
 
   return (
@@ -25,15 +23,12 @@ const ProductList = ({ product }: any) => {
         </Link>
 
         <Link to={`/product/${data.id}`}>
-          <Meta
-            title={data.name}
-            style={{ textTransform: 'capitalize', padding: '1rem 1rem 0rem 1rem', wordWrap: 'break-word' }}
-          />
+          <StyledSpan>{data.name}</StyledSpan>
         </Link>
 
         <StyledDiv>
           <p>{formatCurrency(data?.price)}VND</p>
-          <p>30.7k sold</p>
+          <p>{data.quantity} pieces</p>
         </StyledDiv>
       </Card>
     </ProductWrapper>
@@ -80,4 +75,16 @@ const StyledDiv = styled.div`
     font-size: 1.25rem;
     cursor: pointer;
   }
+`
+
+const StyledSpan = styled.div`
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  overflow: hidden;
+  line-height: 25px;
+  -webkit-line-clamp: 2;
+  height: 70px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 `

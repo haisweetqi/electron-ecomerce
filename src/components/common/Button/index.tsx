@@ -5,19 +5,18 @@ export interface IButton {
   width?: string
   height?: string
   padding?: string
-  bgColor?: string
+  bgcolor?: string
   border?: string
-  borderRadius?: string
+  borderradius?: string
   to?: string
   fs?: string
   fw?: string | number
   color?: string
   onClick?: any
-  isLoading?: boolean
-  zIndex?: string
+  zindex?: string
   children: any
   colorHover?: string
-  fwHover?: number
+
   background?: string
   disabled?: any
 }
@@ -25,38 +24,32 @@ const ButtonCustom: React.FC<IButton> = ({
   width,
   height,
   padding,
-  bgColor,
+  bgcolor,
   border,
-  borderRadius,
+  borderradius,
   to,
   fs,
   fw,
   color,
   onClick = () => {},
-  zIndex,
+  zindex,
   children,
-  isLoading,
-  colorHover,
-  fwHover,
   background,
   disabled
 }) => {
   return (
     <ButtonStyles
-      bgColor={bgColor}
+      bgcolor={bgcolor}
       width={width}
       height={height}
       border={border}
       padding={padding}
-      borderRadius={borderRadius}
+      borderradius={borderradius}
       onClick={onClick}
-      isLoading={isLoading}
-      zIndex={zIndex}
+      zindex={zindex}
       fs={fs}
       fw={fw}
       color={color}
-      colorHover={colorHover}
-      fwHover={fwHover}
       background={background}
       disabled={disabled}
     >

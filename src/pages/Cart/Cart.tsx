@@ -129,10 +129,10 @@ const Cart = () => {
           <Wrapper margin='2rem 0 0 0' display='flex' alignItems='center' justifyContent='space-between'>
             <ButtonCustom
               border='none'
-              bgColor='#eda415'
-              borderRadius='2rem'
+              bgcolor='#eda415'
+              borderradius='2rem'
               padding='1.5rem 2rem'
-              colorHover='white'
+              color='#fff'
               fw={500}
             >
               <Link to={'/'}>Continue shopping</Link>
@@ -147,8 +147,8 @@ const Cart = () => {
             >
               <ButtonCustom
                 border='1px solid #C33131'
-                bgColor='#fff'
-                borderRadius='2rem'
+                bgcolor='#fff'
+                borderradius='2rem'
                 padding='1.5rem 2rem'
                 color='#C33131'
                 fw={500}
@@ -180,12 +180,13 @@ const Cart = () => {
               <span>{convertPrice(total - shippingTotal - discount)}</span>
             </Wrapper>
 
-            <Wrapper display='flex' alignItems='center' justifyContent='center'>
+            <Wrapper display='flex' alignItems='center' justifyContent='center' padding='1rem 0'>
               <ButtonCustom
                 border='none'
-                bgColor='#eda415'
-                borderRadius='2rem'
-                padding='0.8rem 2rem'
+                bgcolor='#eda415'
+                borderradius='2rem'
+                padding='1.25rem 2rem'
+                color='#fff'
                 colorHover='white'
                 fw={500}
                 onClick={handleCheckout}

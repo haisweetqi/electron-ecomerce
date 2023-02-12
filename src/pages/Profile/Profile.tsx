@@ -99,10 +99,10 @@ const Profile = () => {
                 {item.children}
                 {item.isChange && (
                   <ButtonCustom
-                    bgColor='#EDA415'
+                    bgcolor='#EDA415'
                     width='8.25rem'
                     height='3.5rem'
-                    borderRadius='1.25rem'
+                    borderradius='1.25rem'
                     border='none'
                     fw='600'
                     color='#FFFFFF'
