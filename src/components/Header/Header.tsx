@@ -25,7 +25,6 @@ const Header = () => {
   //   const [cart, setCart] = useState(cardDefault)
   const navigate = useNavigate()
   const { isAuthenticated, setIsAuthenticated, cart, setCart }: any = useContext(AppContext)
-  console.log(cart)
 
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
@@ -34,7 +33,7 @@ const Header = () => {
       setProfileToLS(null)
     }
   })
-  console.log('isAuthenticated', isAuthenticated)
+
   const handleLogout = () => {
     logoutMutation.mutate()
   }

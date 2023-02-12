@@ -1,11 +1,12 @@
 import React from 'react'
-import { Button, Card, Image } from 'antd'
+import { Card, Image } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Container } from '../../Global.styled'
 import { formatCurrency } from '../../utils/rule'
 const { Meta } = Card
 const ProductList = ({ product }: any) => {
+  console.log('222', product)
+
   const data = product || []
 
   return (
