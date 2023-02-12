@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const StyledWrapper = styled.div`
   padding: 6rem 0;
   display: flex;
-  column-gap: 2rem;
+  gap: 2rem;
   flex-wrap: wrap;
 
   .ant-table-thead {
@@ -21,16 +21,9 @@ export const StyledH3 = styled.h3`
 `
 
 export const StyledCartTotal = styled.div`
-  position: sticky;
-  top: 154px;
-  bottom: 0px;
-
   flex: 1;
-  height: 100%;
+  min-height: 300px;
   border: 1px solid #c3c3c3;
-  @media screen and (max-width: 998px) {
-    margin-top: 2rem;
-  }
 `
 
 export const StyledCartTotalCheckout = styled.div`
