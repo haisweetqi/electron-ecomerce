@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { DownOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'

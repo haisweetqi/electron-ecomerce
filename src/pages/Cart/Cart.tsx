@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { Image, Space, Table, Button, Popconfirm } from 'antd'
-import type { ColumnsType } from 'antd/es/table'
+import { Image, Table, Button, Popconfirm } from 'antd'
 import { Container } from '../../Global.styled'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
@@ -30,7 +29,6 @@ const Cart = () => {
   const [discount, setDiscount] = useState(0)
   const [shippingTotal, setShippingTotal] = useState(0)
   const navigate = useNavigate()
-  console.log(cart)
 
   useEffect(() => {
     setTotal(cart.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0))
@@ -118,6 +116,7 @@ const Cart = () => {
                   onConfirm={() => {
                     const newData = cart.filter((item: any) => item.key !== record.key)
                     setCart(newData)
+                    setCartToLS(newData)
                   }}
                 >
                   <ButtonCustom border='none' children={<AiOutlineCloseCircle fontSize={'1.5rem'} />} />

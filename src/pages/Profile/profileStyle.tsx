@@ -18,26 +18,6 @@ export const StyledTitle = styled.span`
   margin-bottom: 1rem;
 `
 
-export const ProfileInfo = styled.div`
-  width: 20%;
-  min-width: 15rem;
-  margin-right: 2rem;
-  display: flex;
-  flex-direction: column;
-`
-
-export const UserInfo = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-`
-
-export const UpdateProfile = styled.div`
-  display: flex;
-  gap: 0.25rem;
-  align-items: center;
-`
-
 export const ItemWrapper = styled.div`
   display: flex;
   padding: 2rem;

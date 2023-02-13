@@ -1,5 +1,3 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
 import ProductList from '../../../../components/ProductList/ProductList'
 import { ListProduct, RelatedWrapper, StyleH1 } from './relatedProductStyle'
 
@@ -14,9 +12,7 @@ const RelatedProduct = (props: any) => {
         {Array(4)
           .fill(listProduct)
           .map((product: any, index: any) => (
-            // <Link to={`/product/${product.id}`}>
             <ProductList product={product} key={index} />
-            // </Link>
           ))}
       </ListProduct>
     </RelatedWrapper>

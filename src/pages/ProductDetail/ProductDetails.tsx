@@ -61,7 +61,6 @@ const ProductDetails = () => {
 
   const [quantity, setQuantity] = useState(1)
   const [like, setLike] = useState(false)
-  //   const [cart, setCart]: any = useState([])
   const product = data?.data.data
 
   useEffect(() => {

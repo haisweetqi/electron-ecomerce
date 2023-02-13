@@ -1,4 +1,3 @@
-import React from 'react'
 import { Card, Image } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
