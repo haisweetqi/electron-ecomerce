@@ -1,4 +1,4 @@
-import { BookOutlined, CompassOutlined, EditOutlined, UserOutlined } from '@ant-design/icons'
+import { BookOutlined, CompassOutlined, UserOutlined } from '@ant-design/icons'
 import { Divider, Tabs } from 'antd'
 import ButtonCustom from '../../components/common/Button'
 import ChangePassword from './components/ChangePassword'
