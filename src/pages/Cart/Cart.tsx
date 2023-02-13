@@ -11,6 +11,9 @@ import Wrapper from '../../components/common/Wrapper'
 import DividerCustom from '../../components/common/DividerCustom'
 import { setCartToLS } from '../../utils/auth'
 import { AppContext } from '../../contexts/auth.context'
+import OrderAddress from '../OrderAddress'
+import { useMutation } from '@tanstack/react-query'
+import { paymentService } from '../../apis/payment.api'
 
 interface Item {
   key: number
@@ -28,6 +31,7 @@ const Cart = () => {
   const [total, setTotal] = useState(0)
   const [discount, setDiscount] = useState(0)
   const [shippingTotal, setShippingTotal] = useState(0)
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -58,10 +62,12 @@ const Cart = () => {
     return number.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
   }
 
-  const handleCheckout = () => {
-    setCart([])
-    setCartToLS([])
-    navigate('/payment')
+  const paymentMutation = useMutation({
+    mutationFn: (body: any) => paymentService.payment(body)
+  })
+
+  const handleClickCheckout = () => {
+    navigate('/order')
   }
 
   return (
@@ -158,6 +164,7 @@ const Cart = () => {
             </Popconfirm>
           </Wrapper>
         </Wrapper>
+
         <StyledCartTotal>
           <StyledH3>Cart total</StyledH3>
           <StyledCartTotalCheckout>
@@ -178,22 +185,20 @@ const Cart = () => {
               <h4>Total amount</h4>
               <span>{convertPrice(total - shippingTotal - discount)}</span>
             </Wrapper>
-
-            <Wrapper display='flex' alignItems='center' justifyContent='center' padding='1rem 0'>
-              <ButtonCustom
-                border='none'
-                bgcolor='#eda415'
-                borderradius='2rem'
-                padding='1.25rem 2rem'
-                color='#fff'
-                colorHover='white'
-                fw={500}
-                onClick={handleCheckout}
-                disabled={cart.length === 0}
-              >
-                Proceed to checkout
-              </ButtonCustom>
-            </Wrapper>
+            <ButtonCustom
+              border='none'
+              bgcolor='#eda415'
+              borderradius='2rem'
+              padding='1.25rem 2rem'
+              color='#fff'
+              colorHover='white'
+              fw={500}
+              disabled={cart.length === 0}
+              htmlType='submit'
+              onClick={handleClickCheckout}
+            >
+              Proceed to checkout
+            </ButtonCustom>
           </StyledCartTotalCheckout>
         </StyledCartTotal>
       </StyledWrapper>

@@ -1,7 +1,8 @@
 import { createContext, useState } from 'react'
 import { Cart } from '../types/cart.type'
+import { Total } from '../types/total.type'
 import { User } from '../types/user.type'
-import { getAccessTokenFromLS, getCartToLS, getProfileFromLS } from '../utils/auth'
+import { getAccessTokenFromLS, getCartToLS, getProfileFromLS, getTotalAmountToLS } from '../utils/auth'
 
 /* Defining the shape of the context object. */
 interface AppContextInterface {
@@ -11,6 +12,8 @@ interface AppContextInterface {
   setProfile: React.Dispatch<React.SetStateAction<User | null>>
   cart: Cart | null
   setCart: React.Dispatch<React.SetStateAction<Cart | null>>
+  total: Total | null
+  setTotal: React.Dispatch<React.SetStateAction<Total | null>>
 }
 
 export const getInitialAppContext: () => AppContextInterface = () => {
@@ -20,7 +23,9 @@ export const getInitialAppContext: () => AppContextInterface = () => {
     profile: getProfileFromLS(),
     setProfile: () => null,
     cart: getCartToLS(),
-    setCart: () => null
+    setCart: () => null,
+    total: getTotalAmountToLS(),
+    setTotal: () => null
   }
 }
 
@@ -39,8 +44,11 @@ export const AppProvider = ({
 
   const [profile, setProfile] = useState(defaultValue.profile)
   const [cart, setCart] = useState(defaultValue.cart)
+  const [total, setTotal] = useState(defaultValue.total)
   return (
-    <AppContext.Provider value={{ isAuthenticated, setIsAuthenticated, profile, setProfile, cart, setCart }}>
+    <AppContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, profile, setProfile, cart, setCart, total, setTotal }}
+    >
       {children}
     </AppContext.Provider>
   )

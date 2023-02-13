@@ -12,3 +12,5 @@ export const URL_GET_ORDER = 'api/my_account/orders'
 export const URL_GET_ORDER_DETAIL = 'api/my_account/orders'
 
 export const URL_USER_ACCOUNT = 'api/my_account/view'
+
+export const URL_PAYMENT = 'api/orders/payment'
