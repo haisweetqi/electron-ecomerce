@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import  { useContext } from 'react'
 import logo from '../../assets/images/logo.png'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
@@ -8,7 +8,7 @@ import { Popover, Avatar, Button } from 'antd'
 import BadgeCustom from '../common/Badge'
 import SearchCustom from './../common/Search/SearchCustom'
 import { AppContext } from '../../contexts/auth.context'
-import { setCartToLS, setProfileToLS } from '../../utils/auth'
+import { setProfileToLS } from '../../utils/auth'
 import { useMutation } from '@tanstack/react-query'
 import { authApi } from '../../apis/auth.api'
 
@@ -19,10 +19,6 @@ const styleBadge = {
 }
 
 const Header = () => {
-  //   const cardDefault = localStorage.getItem('cart') ? JSON.parse(localStorage?.getItem('cart') || '') : []
-  //   console.log("localStorage.getItem('cart')localStorage.getItem('cart')", localStorage.getItem('cart'))
-  //   const cart: any = []
-  //   const [cart, setCart] = useState(cardDefault)
   const navigate = useNavigate()
   const { isAuthenticated, setIsAuthenticated, cart, setCart }: any = useContext(AppContext)
 
@@ -64,7 +60,6 @@ const Header = () => {
               </Popover>
             </>
           ) : (
-            // <div>{profile?.email}</div>
             <div>
               <AiOutlineUser />
               <Link to='/auth/login'>Sign in</Link>

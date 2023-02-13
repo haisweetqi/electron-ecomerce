@@ -1,19 +1,10 @@
-import { BookOutlined, CompassOutlined, EditOutlined, UserOutlined } from '@ant-design/icons'
-import { Avatar, Button, Divider, Tabs } from 'antd'
-import React from 'react'
+import { BookOutlined, CompassOutlined, UserOutlined } from '@ant-design/icons'
+import { Divider, Tabs } from 'antd'
 import ButtonCustom from '../../components/common/Button'
 import ChangePassword from './components/ChangePassword'
 import Information from './components/InformationAccount'
 import MyOrder from './components/MyOrder/MyOrder'
-import {
-  ItemWrapper,
-  ProfileInfo,
-  ProfileWrapper,
-  StyledSpan,
-  StyledTitle,
-  UpdateProfile,
-  UserInfo
-} from './profileStyle'
+import { ItemWrapper, ProfileWrapper, StyledSpan, StyledTitle } from './profileStyle'
 
 const Profile = () => {
   const items: any = [
@@ -53,31 +44,6 @@ const Profile = () => {
   ]
   return (
     <ProfileWrapper>
-      {/* <ProfileInfo>
-        <StyledTitle>Profile</StyledTitle>
-        <UserInfo>
-          <Avatar
-            size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-            src='https://cdn.pixabay.com/photo/2020/05/09/13/29/photographer-5149664_960_720.jpg'
-          />
-          <div>
-            <StyledSpan>user@gmail.com</StyledSpan>
-
-            <UpdateProfile>
-              <Button
-                size='large'
-                icon={<EditOutlined style={{ fontSize: '1.5rem' }} />}
-                style={{
-                  border: 'none'
-                }}
-              />
-              <StyledSpan>Update Profile</StyledSpan>
-            </UpdateProfile>
-          </div>
-        </UserInfo>
-
-        <Divider /> */}
-
       <StyledTitle color='#003f62'>My Profile</StyledTitle>
 
       <Tabs

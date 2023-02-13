@@ -5,8 +5,8 @@ import App from './App'
 import { GlobalStyle } from './Global.styled'
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
-import { AppContext, AppProvider } from './contexts/auth.context'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { AppProvider } from './contexts/auth.context'
 
 const queryClient = new QueryClient()
 

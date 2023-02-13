@@ -1,8 +1,5 @@
-import React from 'react'
-import { Space, Spin, Table, Tag } from 'antd'
+import { Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import { useQuery } from '@tanstack/react-query'
-import { userService } from './../../../../apis/user.api'
 
 interface DataType {
   key: string
@@ -40,25 +37,6 @@ const MyOrder = () => {
       key: 'total_amount'
     }
   ]
-
-  //   const { data, isLoading, isError, refetch } = useQuery({
-  //     queryKey: ['products'],
-  //     queryFn: () => {
-  //       return userService.getUserOrderDetails()
-  //     }
-  //   })
-
-  //   if (isLoading) {
-  //     return (
-  //       <div>
-  //         <Spin />
-  //       </div>
-  //     )
-  //   }
-
-  //   if (isError) {
-  //     return <div>Error...</div>
-  //   }
 
   const data: DataType[] = [
     {

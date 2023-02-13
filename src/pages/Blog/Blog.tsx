@@ -1,4 +1,3 @@
-import React from 'react'
 import { Scroll, StyledH2 } from './BlogStyle'
 
 const Blog = () => {

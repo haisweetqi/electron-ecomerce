@@ -1,4 +1,3 @@
-import { Button } from 'antd'
 import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
@@ -30,6 +29,5 @@ export const StyledCartTotalCheckout = styled.div`
   display: flex;
   height: 100%;
   padding: 0 1rem;
-  /* justify-content: space-evenly; */
   flex-direction: column;
 `

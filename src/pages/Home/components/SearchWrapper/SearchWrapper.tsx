@@ -1,5 +1,4 @@
-import React from 'react'
-import { Button, Checkbox, Form, Input, Select } from 'antd'
+import { Button,  Form, Input, Select } from 'antd'
 import styled from 'styled-components'
 const SearchWrapper = ({ handleSearch }: any) => {
   return (

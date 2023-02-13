@@ -1,4 +1,3 @@
-import React from 'react'
 import { Pagination } from 'antd'
 const PaginationCustom = ({ current, pageSize, total, handleChange }: any) => {
   return (
