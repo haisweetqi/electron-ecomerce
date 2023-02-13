@@ -58,3 +58,12 @@ export const getCartToLS = () => {
 export const setCartToLS = (cart: any) => {
   localStorage.setItem('cart', JSON.stringify(cart))
 }
+
+export const setTotalAmountToLS = (totalAmount: any) => {
+  localStorage.setItem('totalAmount', JSON.stringify(totalAmount))
+}
+
+export const getTotalAmountToLS = () => {
+  const result = localStorage.getItem('totalAmount') || ''
+  return result ? JSON.parse(result) : []
+}

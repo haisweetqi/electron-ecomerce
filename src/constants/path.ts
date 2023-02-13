@@ -6,7 +6,8 @@ export const path = {
   cart: '/cart',
   productDetail: '/product/:id',
   blog: '/blog',
-  payment: 'payment'
+  payment: 'payment',
+  order: 'order'
 }
 
 export const navLinks = [

@@ -19,6 +19,7 @@ export interface IButton {
 
   background?: string
   disabled?: any
+  htmlType?: any
 }
 const ButtonCustom: React.FC<IButton> = ({
   width,
@@ -35,7 +36,8 @@ const ButtonCustom: React.FC<IButton> = ({
   zindex,
   children,
   background,
-  disabled
+  disabled,
+  htmlType
 }) => {
   return (
     <ButtonStyles
@@ -52,6 +54,7 @@ const ButtonCustom: React.FC<IButton> = ({
       color={color}
       background={background}
       disabled={disabled}
+      htmlType={htmlType}
     >
       {children}
     </ButtonStyles>

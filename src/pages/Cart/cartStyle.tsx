@@ -28,6 +28,6 @@ export const StyledCartTotal = styled.div`
 export const StyledCartTotalCheckout = styled.div`
   display: flex;
   height: 100%;
-  padding: 0 1rem;
+  padding: 1rem;
   flex-direction: column;
 `
