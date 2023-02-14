@@ -1,4 +1,4 @@
-import  { useContext } from 'react'
+import { useContext } from 'react'
 import logo from '../../assets/images/logo.png'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
@@ -8,7 +8,7 @@ import { Popover, Avatar, Button } from 'antd'
 import BadgeCustom from '../common/Badge'
 import SearchCustom from './../common/Search/SearchCustom'
 import { AppContext } from '../../contexts/auth.context'
-import { setProfileToLS } from '../../utils/auth'
+import { clearLS, setProfileToLS } from '../../utils/auth'
 import { useMutation } from '@tanstack/react-query'
 import { authApi } from '../../apis/auth.api'
 
@@ -26,7 +26,7 @@ const Header = () => {
     mutationFn: authApi.logout,
     onSuccess: (data) => {
       setIsAuthenticated(false)
-      setProfileToLS(null)
+      clearLS()
     }
   })
 

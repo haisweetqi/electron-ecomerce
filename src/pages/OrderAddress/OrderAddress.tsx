@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query'
 import { paymentService } from '../../apis/payment.api'
 import { toast } from 'react-toastify'
 import HttpStatusCode from '../../constants/httpStatusCode'
-import { setCartToLS } from '../../utils/auth'
+import { setCartToLS, setTotalAmountToLS } from '../../utils/auth'
 import { useNavigate } from 'react-router-dom'
 
 const OrderAddress = () => {
@@ -46,6 +46,8 @@ const OrderAddress = () => {
             setCart([])
             setCartToLS([])
             setTotal(0)
+            setTotalAmountToLS(0)
+
             navigate('/payment')
           }
         },

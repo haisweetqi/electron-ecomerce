@@ -45,7 +45,6 @@ export const AppProvider = ({
   const [profile, setProfile] = useState(defaultValue.profile)
   const [cart, setCart] = useState(defaultValue.cart)
   const [total, setTotal] = useState(defaultValue.total)
-  console.log('total', total)
 
   return (
     <AppContext.Provider
