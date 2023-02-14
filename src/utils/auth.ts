@@ -46,6 +46,7 @@ export const clearLS = () => {
   localStorage.removeItem('access_token')
   localStorage.removeItem('refresh_token')
   localStorage.removeItem('profile')
+  localStorage.removeItem('totalAmount')
   const clearLSEvent = new Event('clearLS')
   LocalStorageEventTarget.dispatchEvent(clearLSEvent)
 }
@@ -65,5 +66,5 @@ export const setTotalAmountToLS = (totalAmount: any) => {
 
 export const getTotalAmountToLS = () => {
   const result = localStorage.getItem('totalAmount') || ''
-  return result ? JSON.parse(result) : []
+  return result ? JSON.parse(result) : ''
 }

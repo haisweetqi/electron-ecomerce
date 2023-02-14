@@ -4,6 +4,7 @@ import apiService from '../services'
 
 export const paymentService = {
   payment(params: any) {
-    return apiService.post(URL_PAYMENT, params)
+    const { dataCheckout } = params
+    return apiService.post(URL_PAYMENT, dataCheckout)
   }
 }

@@ -9,7 +9,7 @@ import ButtonCustom from '../../components/common/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import Wrapper from '../../components/common/Wrapper'
 import DividerCustom from '../../components/common/DividerCustom'
-import { setCartToLS } from '../../utils/auth'
+import { setCartToLS, setTotalAmountToLS } from '../../utils/auth'
 import { AppContext } from '../../contexts/auth.context'
 import OrderAddress from '../OrderAddress'
 import { useMutation } from '@tanstack/react-query'
@@ -26,19 +26,36 @@ interface Item {
 }
 
 const Cart = () => {
-  const { isAuthenticated, setIsAuthenticated, cart, setCart }: any = useContext(AppContext)
+  const { cart, setCart, total, setTotal }: any = useContext(AppContext)
 
-  const [total, setTotal] = useState(0)
-  const [discount, setDiscount] = useState(0)
-  const [shippingTotal, setShippingTotal] = useState(0)
+  const [priceTotal, setPriceTotal] = useState({
+    total: 0,
+    discount: 0,
+    shippingTotal: 0
+  })
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    setTotal(cart.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0))
-    setDiscount(cart.reduce((acc: any, item: any) => acc + (item.discount * item.price * item.quantity) / 100, 0))
-    setShippingTotal(cart.reduce((acc: any, item: any) => acc + item.discount, 0))
+    handleTotal()
   }, [cart])
+
+  const handleTotal = () => {
+    const total = cart.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0)
+    const discount = cart.reduce((acc: any, item: any) => acc + (item.discount * item.price * item.quantity) / 100, 0)
+    const shippingTotal = cart.reduce((acc: any, item: any) => acc + item.discount, 0)
+    setPriceTotal({
+      total: total,
+      discount: discount,
+      shippingTotal: shippingTotal
+    })
+    const totalMoney = total - shippingTotal - discount
+    setTotalAmountToLS(totalMoney)
+
+    setTotal(totalMoney)
+  }
+
+  const priceFinish = priceTotal.total - priceTotal.shippingTotal - priceTotal.discount
 
   const handleDecrease = (key: number) => {
     const newData = [...cart]
@@ -61,10 +78,6 @@ const Cart = () => {
   const convertPrice = (number = 0) => {
     return number.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
   }
-
-  const paymentMutation = useMutation({
-    mutationFn: (body: any) => paymentService.payment(body)
-  })
 
   const handleClickCheckout = () => {
     navigate('/order')
@@ -170,20 +183,20 @@ const Cart = () => {
           <StyledCartTotalCheckout>
             <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
               <h4>Product Subtotal</h4>
-              <span>{convertPrice(total)}</span>
+              <span>{convertPrice(priceTotal.total)}</span>
             </Wrapper>
             <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
               <h4>Discount</h4>
-              <span>{convertPrice(discount)}</span>
+              <span>{convertPrice(priceTotal.discount)}</span>
             </Wrapper>
             <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
               <h4>Shipping Total</h4>
-              <span>{convertPrice(shippingTotal)}</span>
+              <span>{convertPrice(priceTotal.shippingTotal)}</span>
             </Wrapper>
             <DividerCustom />
             <Wrapper display='flex' alignItems='center' justifyContent='space-between' padding='1rem'>
               <h4>Total amount</h4>
-              <span>{convertPrice(total - shippingTotal - discount)}</span>
+              <span>{convertPrice(priceFinish)}</span>
             </Wrapper>
             <ButtonCustom
               border='none'
